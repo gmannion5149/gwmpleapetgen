@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://gmannion5149.github.io/generalpetitiongen/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plea Petition Generator</title>
+<link href="./Plea Petition Generator_files/css2" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1424;--gold:#D4AF37;--gold-br:#ECCD64;--gold-dk:#8E7530;--maroon:#D4AF37;--maroon-dk:#B4902A;
+  --plat:#C8CDD6;--plat-dk:#8A93A3;
+  --bg:#0A1220;--card:#111C30;
+  --inner:#16223A;--border:#27324A;--text:#F2F4F7;--muted:#9AA6BC;
+  --blue:#54CBBF;--blue-bg:#102A29;--blue-bd:#2C6A64;
+  --green-bg:#132518;--green-bd:#2E7D4F;--green-tx:#6FD695;
+  --red:#EF8A8A;--red-bg:#2A1618;--red-bd:#6E2A2E;
+  --purple:#9B7FD4;--purple-bg:#201D38;--purple-bd:#463A68;
+}
+body{font-family:'Inter',system-ui,sans-serif;background:#0A1220;background-image:radial-gradient(1100px 520px at 50% -8%,#182A49 0%,rgba(24,42,73,0) 60%),linear-gradient(180deg,#0C1526 0%,#0A1220 58%,#070E1B 100%);background-attachment:fixed;color:var(--text);min-height:100vh;font-size:14px}
+.app{max-width:880px;margin:0 auto;padding:1rem 1rem 3rem}
+.app.preview-mode{max-width:1000px}
+
+/* ── Header ── */
+.hdr{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.hdr-eye{font-size:10px;letter-spacing:.13em;color:var(--gold);font-weight:600;text-transform:uppercase;margin-bottom:2px}
+.hdr-title{font-size:17px;font-weight:500;color:var(--text)}
+
+/* ── Buttons ── */
+.btn{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;
+  border:1px solid var(--border);
+  background:linear-gradient(165deg,#1C2B47 0%,#16233C 52%,#111C30 100%);
+  color:var(--gold);transition:box-shadow .18s,transform .12s,filter .18s,border-color .18s}
+.btn:hover{box-shadow:0 0 14px rgba(212,175,55,.28);border-color:var(--gold-dk);filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;filter:none}
+.btn-navy{background:linear-gradient(165deg,#22355A 0%,#1A2A48 52%,#142339 100%);color:var(--gold-br);border-color:var(--gold-dk);font-weight:700}
+.btn-navy:hover{box-shadow:0 0 16px rgba(212,175,55,.35);border-color:var(--gold)}
+.btn-gold{background:linear-gradient(165deg,#F7ECC8 0%,#E7CE84 34%,#D4AF37 50%,#E1C574 66%,#F4E7BC 100%);color:#231B04;border-color:var(--gold-dk);font-weight:700;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+.btn-gold:hover{box-shadow:0 0 18px rgba(212,175,55,.6),0 0 6px rgba(236,205,100,.6);border-color:var(--gold);filter:brightness(1.05)}
+.btn-sm{padding:4px 10px;font-size:11px;border-radius:6px}
+.btn-danger{color:#F2C3C3;border-color:var(--red-bd);background:linear-gradient(165deg,#3A1E22 0%,#2A1618 100%)}
+.btn-danger:hover{box-shadow:0 0 12px rgba(239,138,138,.3);border-color:var(--red);filter:brightness(1.1)}
+
+/* ── Cards ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:.875rem}
+.sec-hdr{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center}
+
+/* ── Form ── */
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+input,select,textarea{width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;color:var(--text);font-family:inherit;background:var(--inner);outline:none;transition:border-color .15s}
+input[type="checkbox"]{width:15px;height:15px;flex:0 0 auto;padding:0;margin:0;cursor:pointer}
+input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+input[readonly]{background:var(--card);color:var(--muted);cursor:default}
+textarea{resize:vertical;line-height:1.55}
+.row{display:flex;gap:10px;margin-bottom:10px}
+.f1{flex:1;min-width:0}.f2{flex:2;min-width:0}.f3{flex:3;min-width:0}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:6px}
+.tab{padding:7px 16px;border-radius:8px;font-size:13px;cursor:pointer;border:1px solid var(--border);background:linear-gradient(165deg,#1C2B47 0%,#141F35 100%);color:var(--muted);font-family:inherit;font-weight:600;transition:box-shadow .18s,color .15s,border-color .15s}
+.tab:hover:not(.tab-on){box-shadow:0 0 10px rgba(212,175,55,.22);color:var(--gold-br);border-color:var(--gold-dk)}
+
+.tab-on{background:linear-gradient(165deg,#E7CE84 0%,#D4AF37 55%,#C29A2C 100%);color:#231B04;border-color:var(--gold);font-weight:700}
+
+/* ── Charge cards ── */
+.chg-card{background:var(--inner);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:10px}
+.chg-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.chg-lbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* ── Quick-select pills ── */
+.qrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.qrow-lbl{font-size:11px;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.qbtn{padding:5px 14px;border-radius:20px;border:1.5px solid var(--border);background:linear-gradient(165deg,#1C2B47 0%,#141F35 100%);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--muted);transition:box-shadow .18s,color .15s,border-color .15s}
+.qbtn:hover{box-shadow:0 0 10px rgba(212,175,55,.22);color:var(--gold-br);border-color:var(--gold-dk)}
+
+.qbtn.on{background:linear-gradient(165deg,#E7CE84 0%,#D4AF37 55%,#C29A2C 100%);color:#231B04;border-color:var(--gold)}
+.dbtn{padding:3px 11px;border-radius:20px;border:1.5px solid var(--border);background:linear-gradient(165deg,#1C2B47 0%,#141F35 100%);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--muted);transition:box-shadow .18s,color .15s,border-color .15s}
+.dbtn:hover{box-shadow:0 0 10px rgba(155,127,212,.28)}
+.dbtn:hover{border-color:var(--purple);color:var(--purple)}
+.dbtn.on{background:var(--purple);color:#150F26;border-color:var(--purple);font-weight:700}
+.dbtn-none:hover{border-color:var(--muted);color:var(--muted)}
+.dbtn-none.on{background:var(--muted);color:#0A1220;border-color:var(--muted)}
+
+/* ── Special counts ── */
+.sp-section{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border)}
+.sp-section-lbl{font-size:10px;color:#9CA3AF;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.sp-row{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:8px;margin-bottom:6px}
+.sp-off{background:var(--inner);border:1px dashed var(--border)}
+.sp-on{background:var(--blue-bg);border:1px solid var(--blue-bd)}
+.sp-cb{width:16px;height:16px;cursor:pointer;flex-shrink:0;margin-top:2px;accent-color:var(--maroon)}
+.sp-body{flex:1}
+.sp-name{font-size:13px;font-weight:500}
+.sp-desc{font-size:12px;color:var(--muted);font-style:italic;margin-top:3px;line-height:1.5}
+.sp-degs{display:flex;align-items:center;gap:5px;margin-top:8px}
+
+/* ── Plea selector ── */
+.plea-row{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:8px;margin-bottom:6px;cursor:pointer}
+.plea-off{background:var(--inner);border:1.5px solid var(--border)}
+.plea-on{background:var(--blue-bg);border:1.5px solid var(--blue-bd)}
+.plea-cb{width:16px;height:16px;cursor:pointer;flex-shrink:0;margin-top:2px;accent-color:var(--maroon)}
+.plea-txt{font-size:13px;line-height:1.55}
+.badge{font-size:10px;background:var(--inner);border:1px solid var(--border);border-radius:4px;padding:1px 6px;color:var(--muted);margin-left:5px;font-weight:500}
+
+/* ── Notice ── */
+.notice{font-size:12px;padding:8px 12px;border-radius:6px;margin-top:8px}
+.notice-ok{color:var(--green-tx);background:var(--green-bg);border:1px solid var(--green-bd)}
+
+/* ── Preview ── */
+#pv{display:none}
+.pv-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:1.25rem}
+.stat-ok{font-size:13px;color:var(--green-tx)}
+.stat-err{font-size:13px;color:var(--red)}
+.drv-link{font-size:13px;color:var(--blue);text-decoration:none}
+.drv-link:hover{text-decoration:underline}
+
+/* ── Petition pages container ── */
+#petition-doc{outline:none}
+
+/* Each rendered page is a letter-sized sheet with 1in margins all around */
+.page{
+  width:8.5in;
+  height:11in;
+  background:#fff;
+  font-family:'Times New Roman',Times,serif;
+  font-size:12pt;
+  line-height:1.15;
+  color:#111;
+  margin:0 auto 0.5in;
+  padding:1in;
+  box-sizing:border-box;
+  box-shadow:0 4px 18px rgba(0,0,0,0.12);
+  outline:none;
+  position:relative;
+  overflow:hidden;
+}
+.page:last-child{margin-bottom:0}
+.page:focus{box-shadow:0 4px 18px rgba(0,0,0,0.12),0 0 0 3px rgba(212,175,55,.35)}
+
+/* Subtle page-number badge in top-right corner of each preview page */
+.page::before{
+  content:'Page ' attr(data-page) ' of ' attr(data-of);
+  position:absolute;
+  top:-1.3em;
+  right:0;
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  color:#64748b;
+  letter-spacing:0.04em;
+}
+
+/* Header rows: two bold lines with 1 line of space between */
+.p-hdr-row{display:flex;justify-content:space-between;font-weight:700;margin-bottom:1em}
+.p-hdr-row:last-of-type{margin-bottom:0}
+
+/* Horizontal rules */
+.p-rule{border:none;border-top:1.5px solid #111;margin:0.6em 0}
+.p-dbl{border-top:3px double #111;margin:8px 0 14px}
+.p-sl{border-bottom:1px solid #111;margin-bottom:3px;margin-top:1.5em;display:inline-block}
+
+/* Caption table — proper court format */
+.p-cap{width:100%;border-collapse:collapse;margin:0.4em 0;font-family:inherit;font-size:inherit;line-height:1.15}
+.p-cap td{vertical-align:top;padding:0}
+.p-cap-gap{height:0.9em}
+.p-cap td.p-cap-indent{padding-left:1.25in}
+
+/* Numbered paragraphs: hanging indent with 0.5in number column */
+.p-para{display:flex;margin-bottom:1em;line-height:1.15}
+.p-pn{flex:0 0 0.5in}
+.p-pb{flex:1}
+
+/* Count items, rights, sentencing — indented 0.5in within paragraph body */
+.p-count{padding-left:0.5in;margin-top:0.9em;line-height:1.15}
+.p-count-i{padding-left:0.5in;margin-top:0.9em;font-style:italic;line-height:1.15}
+.p-count-i strong{font-style:normal;font-weight:700}
+
+/* Signature blocks */
+.p-sig-space{height:1.1em;margin-top:1.15em}
+.p-sig-line{border-bottom:1px solid #111;width:2.5in}
+.p-sig-label{margin-top:1px;line-height:1.15}
+.p-atty-info{margin-top:0;line-height:1.15}
+.p-atty-stmt{margin-top:1.4em;line-height:1.15}
+
+/* Placeholder ghost text */
+.p-ph{color:#9CA3AF;font-style:italic;font-family:'Inter',sans-serif;font-size:11pt;font-weight:400}
+
+@media print{
+  .pv-bar,.hdr,#fv{display:none!important}
+  html,body{margin:0!important;padding:0!important;background:#fff!important}
+  .app,#pv,#petition-doc{max-width:none!important;padding:0!important;margin:0!important}
+  .page{
+    width:8.5in!important;
+    height:11in!important;
+    margin:0!important;
+    padding:1in!important;
+    box-sizing:border-box!important;
+    box-shadow:none!important;
+    overflow:hidden!important;
+    page-break-after:always;
+    break-after:page;
+  }
+  .page:last-child{page-break-after:auto;break-after:auto}
+  .page::before{display:none}
+  @page{size:letter;margin:0}
+}
+@media screen and (max-width:900px){
+  .page{width:100%;padding:0.5in}
+}
+</style>
+</head>
+<body class="clickup-chrome-ext_installed">
+<div class="app">
+
+<!-- ═══ FORM VIEW ═══ -->
+<div id="fv">
+
+  <div style="text-align:center;padding:.5rem 0 .75rem">
+    <span style="font-size:22px;font-weight:700;color:var(--gold);letter-spacing:-.01em">Plea Petition Generator</span>
+  </div>
+
+  <div class="hdr">
+    <div><div class="hdr-eye">Minnesota District Courts</div><div class="hdr-title">Plea Petition Generator</div></div>
+    <button class="btn btn-gold" onclick="showPreview()" fdprocessedid="1qopjm">Preview petition →</button>
+  </div>
+
+  <!-- Type selector -->
+  <div class="card">
+    <div class="sec-hdr">Petition type</div>
+    <select id="type-select" onchange="setType(this.value)" style="width:auto;min-width:240px;font-size:14px;padding:9px 12px" fdprocessedid="xovykkp">
+      <option value="dwi">DWI Plea Petition</option>
+      <option value="standard">Standard Plea Petition</option>
+      <option value="pm">Petty Plea Petition</option>
+    </select>
+  </div>
+
+  <!-- PDF auto-fill -->
+  <div class="card">
+    <div class="sec-hdr">Auto-fill from complaint / citation</div>
+    <div class="row" style="align-items:center">
+      <input type="file" id="pdf-up" accept="application/pdf" onchange="onPdfSelected()" style="flex:1;min-width:200px;padding:8px;border:1px dashed var(--border);border-radius:8px;background:var(--bg);font-size:13px">
+    </div>
+    <div class="row" style="margin-top:8px">
+      <div class="f1">
+        <label>Pleading to (optional — syncs with count list below)</label>
+        <select id="ai-plea-sel" onchange="onPleaChoice()" style="width:auto;min-width:180px;max-width:260px" fdprocessedid="iwxe1q"><option value="">— Select —</option><option value="c1">Count 1</option><option value="amended">Amended Count</option></select>
+        <div id="ai-multi-wrap" style="display:none;margin-top:6px;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"><label style="display:flex;align-items:center;gap:6px;font-size:13px;margin:3px 0;cursor:pointer">
+      <input type="checkbox" class="ai-multi-cb" value="c1" onchange="applyPleaSelection()"> Count 1
+    </label><label style="display:flex;align-items:center;gap:6px;font-size:13px;margin:3px 0;cursor:pointer">
+    <input type="checkbox" class="ai-multi-cb" value="amended" onchange="applyPleaSelection()"> Amended Count
+  </label></div>
+        <div id="ai-amend-wrap" style="display:none;margin-top:6px">
+          <input id="ai-amend" oninput="applyPleaSelection()" placeholder="Type the count and statute — e.g. &quot;Count 3 amended to Careless Driving, 169.13 subd. 2(a)&quot;">
+        </div>
+        <label id="ai-enh-wrap" style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-top:8px">
+          <input type="checkbox" id="ai-enh" onchange="S.enhanceOn=this.checked;renderTF()">
+          Enhanceable Offense
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="f1">
+        <label>The deal (optional — shorthand is fine)</label>
+        <textarea id="ai-deal" rows="2" placeholder="e.g. &quot;plead ct 2, dismiss rest, SOI 1yr Dakota Comm Corr, $600 + fees, CUA + follow recs, VIP, no same/similar, law abiding&quot;"></textarea>
+      </div>
+    </div>
+    <div class="row" style="margin-top:4px">
+      <button class="btn btn-navy" id="btn-ai" onclick="autoFillFromPdf()" fdprocessedid="4ja0gr">✨ Auto-fill petition</button>
+    </div>
+    <div id="ai-status" style="margin-top:6px;font-size:13px;color:var(--muted)"></div>
+    <div style="margin-top:8px">
+      <a href="file:///C:/Users/gerar/Downloads/index_1.html#" onclick="event.preventDefault();const w=$(&#39;key-wrap&#39;);w.style.display=w.style.display===&#39;none&#39;?&#39;block&#39;:&#39;none&#39;" style="font-size:12px;color:var(--muted)">⚙ API key settings</a>
+      <div id="key-wrap" style="display:none;margin-top:6px">
+        <div class="row" style="align-items:center">
+          <input type="password" id="ai-key" placeholder="sk-ant-..." style="flex:1;font-size:13px" oninput="saveApiKey(this.value)">
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">Required when running this file outside claude.ai. Get a key at console.anthropic.com → API Keys. Stored only in this browser.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared court + client info -->
+  <div class="card">
+    <div class="sec-hdr">Attorney information</div>
+    <div class="row">
+      <div class="f2">
+        <label>Attorney name</label>
+        <input id="g-aname" value="Gerard W. Mannion" readonly oninput="S.attyName=this.value">
+      </div>
+      <div class="f1">
+        <label>Attorney ID</label>
+        <input id="g-alic" value="404006" readonly oninput="S.attyLic=this.value">
+      </div>
+    </div>
+    <div class="row">
+      <div class="f1">
+        <label>Firm &amp; address</label>
+        <textarea id="g-afirm" rows="6" readonly oninput="S.attyFirm=this.value">Gerald Miller, P.A.
+2915 Wayzata Boulevard South
+Minneapolis, MN 55405
+(612) 341-9080 Phone
+(612) 341-9079 Fax
+gmannion@geraldmiller.com</textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Court &amp; case information</div>
+    <div class="row">
+      <div class="f1">
+        <label>County</label>
+        <select id="s-county" onchange="onCounty()" fdprocessedid="6sko1a"><option value="">Select county...</option><option value="Aitkin">Aitkin</option><option value="Anoka">Anoka</option><option value="Becker">Becker</option><option value="Beltrami">Beltrami</option><option value="Benton">Benton</option><option value="Big Stone">Big Stone</option><option value="Blue Earth">Blue Earth</option><option value="Brown">Brown</option><option value="Carlton">Carlton</option><option value="Carver">Carver</option><option value="Cass">Cass</option><option value="Chippewa">Chippewa</option><option value="Chisago">Chisago</option><option value="Clay">Clay</option><option value="Clearwater">Clearwater</option><option value="Cook">Cook</option><option value="Cottonwood">Cottonwood</option><option value="Crow Wing">Crow Wing</option><option value="Dakota">Dakota</option><option value="Dodge">Dodge</option><option value="Douglas">Douglas</option><option value="Faribault">Faribault</option><option value="Fillmore">Fillmore</option><option value="Freeborn">Freeborn</option><option value="Goodhue">Goodhue</option><option value="Grant">Grant</option><option value="Hennepin">Hennepin</option><option value="Houston">Houston</option><option value="Hubbard">Hubbard</option><option value="Isanti">Isanti</option><option value="Itasca">Itasca</option><option value="Jackson">Jackson</option><option value="Kanabec">Kanabec</option><option value="Kandiyohi">Kandiyohi</option><option value="Kittson">Kittson</option><option value="Koochiching">Koochiching</option><option value="Lac qui Parle">Lac qui Parle</option><option value="Lake">Lake</option><option value="Lake of the Woods">Lake of the Woods</option><option value="Le Sueur">Le Sueur</option><option value="Lincoln">Lincoln</option><option value="Lyon">Lyon</option><option value="Mahnomen">Mahnomen</option><option value="Marshall">Marshall</option><option value="Martin">Martin</option><option value="McLeod">McLeod</option><option value="Meeker">Meeker</option><option value="Mille Lacs">Mille Lacs</option><option value="Morrison">Morrison</option><option value="Mower">Mower</option><option value="Murray">Murray</option><option value="Nicollet">Nicollet</option><option value="Nobles">Nobles</option><option value="Norman">Norman</option><option value="Olmsted">Olmsted</option><option value="Otter Tail">Otter Tail</option><option value="Pennington">Pennington</option><option value="Pine">Pine</option><option value="Pipestone">Pipestone</option><option value="Polk">Polk</option><option value="Pope">Pope</option><option value="Ramsey">Ramsey</option><option value="Red Lake">Red Lake</option><option value="Redwood">Redwood</option><option value="Renville">Renville</option><option value="Rice">Rice</option><option value="Rock">Rock</option><option value="Roseau">Roseau</option><option value="Scott">Scott</option><option value="Sherburne">Sherburne</option><option value="Sibley">Sibley</option><option value="St. Louis">St. Louis</option><option value="Stearns">Stearns</option><option value="Steele">Steele</option><option value="Stevens">Stevens</option><option value="Swift">Swift</option><option value="Todd">Todd</option><option value="Traverse">Traverse</option><option value="Wabasha">Wabasha</option><option value="Wadena">Wadena</option><option value="Waseca">Waseca</option><option value="Washington">Washington</option><option value="Watonwan">Watonwan</option><option value="Wilkin">Wilkin</option><option value="Winona">Winona</option><option value="Wright">Wright</option><option value="Yellow Medicine">Yellow Medicine</option><option value="Aitkin">Aitkin</option><option value="Anoka">Anoka</option><option value="Becker">Becker</option><option value="Beltrami">Beltrami</option><option value="Benton">Benton</option><option value="Big Stone">Big Stone</option><option value="Blue Earth">Blue Earth</option><option value="Brown">Brown</option><option value="Carlton">Carlton</option><option value="Carver">Carver</option><option value="Cass">Cass</option><option value="Chippewa">Chippewa</option><option value="Chisago">Chisago</option><option value="Clay">Clay</option><option value="Clearwater">Clearwater</option><option value="Cook">Cook</option><option value="Cottonwood">Cottonwood</option><option value="Crow Wing">Crow Wing</option><option value="Dakota">Dakota</option><option value="Dodge">Dodge</option><option value="Douglas">Douglas</option><option value="Faribault">Faribault</option><option value="Fillmore">Fillmore</option><option value="Freeborn">Freeborn</option><option value="Goodhue">Goodhue</option><option value="Grant">Grant</option><option value="Hennepin">Hennepin</option><option value="Houston">Houston</option><option value="Hubbard">Hubbard</option><option value="Isanti">Isanti</option><option value="Itasca">Itasca</option><option value="Jackson">Jackson</option><option value="Kanabec">Kanabec</option><option value="Kandiyohi">Kandiyohi</option><option value="Kittson">Kittson</option><option value="Koochiching">Koochiching</option><option value="Lac qui Parle">Lac qui Parle</option><option value="Lake">Lake</option><option value="Lake of the Woods">Lake of the Woods</option><option value="Le Sueur">Le Sueur</option><option value="Lincoln">Lincoln</option><option value="Lyon">Lyon</option><option value="Mahnomen">Mahnomen</option><option value="Marshall">Marshall</option><option value="Martin">Martin</option><option value="McLeod">McLeod</option><option value="Meeker">Meeker</option><option value="Mille Lacs">Mille Lacs</option><option value="Morrison">Morrison</option><option value="Mower">Mower</option><option value="Murray">Murray</option><option value="Nicollet">Nicollet</option><option value="Nobles">Nobles</option><option value="Norman">Norman</option><option value="Olmsted">Olmsted</option><option value="Otter Tail">Otter Tail</option><option value="Pennington">Pennington</option><option value="Pine">Pine</option><option value="Pipestone">Pipestone</option><option value="Polk">Polk</option><option value="Pope">Pope</option><option value="Ramsey">Ramsey</option><option value="Red Lake">Red Lake</option><option value="Redwood">Redwood</option><option value="Renville">Renville</option><option value="Rice">Rice</option><option value="Rock">Rock</option><option value="Roseau">Roseau</option><option value="Scott">Scott</option><option value="Sherburne">Sherburne</option><option value="Sibley">Sibley</option><option value="St. Louis">St. Louis</option><option value="Stearns">Stearns</option><option value="Steele">Steele</option><option value="Stevens">Stevens</option><option value="Swift">Swift</option><option value="Todd">Todd</option><option value="Traverse">Traverse</option><option value="Wabasha">Wabasha</option><option value="Wadena">Wadena</option><option value="Waseca">Waseca</option><option value="Washington">Washington</option><option value="Watonwan">Watonwan</option><option value="Wilkin">Wilkin</option><option value="Winona">Winona</option><option value="Wright">Wright</option><option value="Yellow Medicine">Yellow Medicine</option></select>
+      </div>
+      <div class="f1">
+        <label>Judicial district</label>
+        <input id="s-district" readonly="" placeholder="Auto-populated from county" fdprocessedid="idi6nk">
+      </div>
+    </div>
+    <div class="row">
+      <div class="f2">
+        <label>Client name</label>
+        <input id="s-name" oninput="S.clientName=this.value" placeholder="Full legal name" fdprocessedid="8otxxk">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--muted);margin-top:5px">
+          <input type="checkbox" id="s-addl" onchange="S.showAddlClient=this.checked;$(&#39;addl-client-wrap&#39;).style.display=this.checked?&#39;block&#39;:&#39;none&#39;">
+          Additional client information
+        </label>
+      </div>
+      <div class="f1" id="dob-wrap">
+        <label>Date of birth</label>
+        <input type="date" id="s-dob" oninput="S.clientDob=this.value">
+      </div>
+      <div class="f1">
+        <label id="lbl-cn">Case number</label>
+        <input id="s-caseno" oninput="onCaseNoInput(this)" placeholder="27-CR-25-000000" fdprocessedid="41b6g">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--muted);margin-top:5px">
+          <input type="checkbox" id="s-cn4" onchange="S.caseNo4=this.checked;reformatCaseNo()">
+          add court letters
+        </label>
+      </div>
+    </div>
+    <div id="addl-client-wrap" style="display:none;margin-top:8px">
+      <div class="row">
+        <div class="f2">
+          <label>Street address</label>
+          <input id="s-cstreet" oninput="S.clientStreet=this.value" placeholder="123 Main St">
+        </div>
+      </div>
+      <div class="row">
+        <div class="f2">
+          <label>City, State, Zip</label>
+          <input id="s-ccsz" oninput="S.clientCityStateZip=this.value" placeholder="Minneapolis, MN 55401">
+        </div>
+      </div>
+      <div class="row">
+        <div class="f1">
+          <label>Client phone</label>
+          <input id="s-cphone" oninput="onPhoneInput(this)" placeholder="(612) 555-1234">
+        </div>
+        <div class="f1">
+          <label>Client email</label>
+          <input id="s-cemail" oninput="S.clientEmail=this.value" placeholder="client@example.com">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Type-specific fields rendered here -->
+  <div id="tf">
+  <div class="card">
+    <div class="sec-hdr">Charges filed</div>
+    <div id="chg-sec"><div class="row" style="margin-bottom:12px;align-items:flex-end">
+    <div style="flex:0 0 auto">
+      <label>Number of counts</label>
+      <select onchange="setCountNum(+this.value)" style="width:auto;min-width:80px" fdprocessedid="hxq2sl">
+        <option selected="">1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+      </select>
+    </div>
+  </div>
+<div class="chg-card" id="cc-1">
+  <div class="chg-hdr">
+    <span class="chg-lbl">Count 1</span>
+  </div>
+
+  <div class="row" style="margin-bottom:4px">
+    <div class="f2">
+      <label>Charge</label>
+      <select onchange="setChgType(1,this.value)" fdprocessedid="hhaokar">
+        <option value="">— Select charge —</option>
+        <optgroup label="Alcohol">
+          <option value=".08">.08 or More</option>
+          <option value="UI">Under the Influence</option>
+          <option value="R">Refusal</option>
+        </optgroup>
+        <optgroup label="Controlled Substances">
+          <option value="cs-imp">Controlled Substance (Impaired)</option>
+          <option value="intox">Intoxicating Substance</option>
+          <option value="cs-cont">Controlled Substance (Contains)</option>
+          <option value="cannabis">Cannabis</option>
+        </optgroup>
+        <optgroup label="Other">
+          <option value="ref">Reference Statute</option>
+          <option value="careless">Careless Driving</option>
+          <option value="other">Other</option>
+        </optgroup>
+      </select>
+    </div>
+    
+    <div class="f1">
+      <label>With reference to</label>
+      <select onchange="setRefDeg(1,this.value)" fdprocessedid="kffc">
+        <option value="">— None —</option>
+        <option value="4th">4th Degree</option>
+        <option value="3rd">3rd Degree</option>
+        <option value="2nd">2nd Degree</option>
+        <option value="1st">1st Degree</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="margin-bottom:8px">
+    <label>Description</label>
+    <textarea rows="2" oninput="updChg(1,&#39;desc&#39;,this.value)" placeholder="Auto-filled from charge selection above"></textarea>
+  </div>
+  <div class="row" style="margin-bottom:4px">
+    <div class="f1">
+      <label>Charge statute</label>
+      <input value="" oninput="updChg(1,&#39;statute&#39;,this.value)" placeholder="auto-filled" fdprocessedid="2jc4w">
+    </div>
+    
+    <div class="f1">
+      <label>Reference statute</label>
+      <input value="" oninput="updChg(1,&#39;ref&#39;,this.value)" placeholder="e.g., 169A.27 subd. 2" fdprocessedid="6cuv0l">
+    </div>
+  </div>
+</div></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Plea — count(s) pleading guilty to</div>
+    <div id="plea-sec"><div style="margin-bottom:12px;padding:10px;border-radius:8px;background:#f9fafb;border:1.5px solid var(--border)"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;font-weight:500;color:var(--muted)">Careless Driving amendment:</span><button class="qbtn" onclick="clickCareless()" fdprocessedid="jk4w1b">Careless Driving</button></div></div><div class="plea-row plea-off" onclick="togPlea(&#39;1&#39;)">
+      <input type="checkbox" class="plea-cb" onclick="event.stopPropagation();togPlea(&#39;1&#39;)">
+      <span class="plea-txt">
+        <strong>Count 1:</strong> (no description entered)<span style="color:var(--muted)"></span>
+      </span>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Offense details &amp; factual basis</div>
+    <div class="row">
+      <div class="f1"><label>Date of offense</label><input type="date" id="f-od" value="" oninput="S.offDate=this.value"></div>
+      <div class="f1"><label>City of offense</label><input id="f-oc" value="" oninput="S.offCity=this.value" placeholder="Robbinsdale" fdprocessedid="hd7bc"></div>
+      <div class="f1"><label>County of offense</label><input id="f-oco" value="" oninput="S.offCounty=this.value" placeholder="Hennepin" fdprocessedid="vmuxo8"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <label style="margin:0">Facts / factual basis</label>
+      <button class="btn btn-sm" onclick="autoFacts()" fdprocessedid="8hw3l6">Auto-fill standard DWI facts</button>
+    </div>
+    <textarea id="f-facts" rows="5" oninput="S.facts=this.value" placeholder="Click Auto-fill or enter the factual basis for the plea."></textarea>
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Charge level &amp; maximum penalties</div>
+    <div class="row">
+      <div class="f1"><label>Charge level</label>
+        <select onchange="changeLevel(this.value)" fdprocessedid="k1mbx">
+          <option selected="">Misdemeanor</option><option>Gross Misdemeanor</option><option>Felony</option>
+        </select>
+      </div>
+      <div class="f1"><label>Maximum fine</label><input id="f-fine" value="$1,000" oninput="onFineInput(this)" placeholder="$1,000" fdprocessedid="he9diy"></div>
+      <div class="f1"><label>Maximum incarceration</label><input id="f-jail" value="90" oninput="S.maxJail=this.value" placeholder="90" fdprocessedid="97boib"></div>
+      <div class="f1"><label>Unit</label>
+        <select onchange="S.jailUnit=this.value" fdprocessedid="cckhgf">
+          <option selected="">days in jail</option>
+          <option>years in prison</option>
+        </select>
+      </div>
+    </div>
+    <div class="notice notice-ok">Auto-filled: Misdemeanor — $1,000 max fine / 90 days in jail</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Sentencing agreement (paragraph 9)</div>
+    <textarea id="f-sent" rows="4" oninput="S.sentencing=this.value" placeholder="e.g., Plead Guilty to Count 2. 90 days in jail, with 89 days stayed for 2 years to Hennepin County Probation..."></textarea>
+  </div>
+
+  </div>
+
+  <div style="text-align:right;padding-bottom:2rem">
+    <button class="btn btn-gold" onclick="showPreview()" fdprocessedid="0u6kgu">Preview petition →</button>
+  </div>
+</div>
+
+<!-- ═══ PREVIEW VIEW ═══ -->
+<div id="pv">
+  <div class="pv-bar">
+    <button class="btn" onclick="showForm()">← Back to form</button>
+    <button class="btn btn-navy" onclick="convertToWord()">📄 Convert to Microsoft Word</button>
+    <button class="btn btn-navy" onclick="convertToGDocs()">📝 Convert to Google Docs</button>
+    <button class="btn btn-navy" onclick="convertToPdf()">📑 Convert to PDF</button>
+    <button class="btn" onclick="printPetition()">🖨 Print</button>
+    <button class="btn" id="btn-cpy" onclick="copyTxt()">Copy text</button>
+    <button class="btn" onclick="paginatePreview()" title="Recalculate page breaks after edits">↻ Refresh pages</button>
+    <span style="font-size:12px;color:var(--muted);margin-left:4px">✏️ Click petition to edit</span>
+    <span id="drv-status"></span>
+  </div>
+  <div id="petition-doc"></div>
+</div>
+
+</div><!-- .app -->
+<script>
+/* ═══════════════════════════════════════════════════════
+   CONSTANTS
+═══════════════════════════════════════════════════════ */
+const CD={
+  'Aitkin':'9th','Anoka':'10th','Becker':'7th','Beltrami':'9th','Benton':'7th',
+  'Big Stone':'8th','Blue Earth':'5th','Brown':'5th','Carlton':'6th','Carver':'1st',
+  'Cass':'9th','Chippewa':'8th','Chisago':'10th','Clay':'7th','Clearwater':'9th',
+  'Cook':'6th','Cottonwood':'5th','Crow Wing':'9th','Dakota':'1st','Dodge':'3rd',
+  'Douglas':'7th','Faribault':'5th','Fillmore':'3rd','Freeborn':'3rd','Goodhue':'3rd',
+  'Grant':'7th','Hennepin':'4th','Houston':'3rd','Hubbard':'9th','Isanti':'10th',
+  'Itasca':'9th','Jackson':'5th','Kanabec':'10th','Kandiyohi':'8th','Kittson':'9th',
+  'Koochiching':'9th','Lac qui Parle':'8th','Lake':'6th','Lake of the Woods':'9th',
+  'Le Sueur':'1st','Lincoln':'5th','Lyon':'5th','Mahnomen':'9th','Marshall':'9th',
+  'Martin':'5th','McLeod':'1st','Meeker':'8th','Mille Lacs':'7th','Morrison':'7th',
+  'Mower':'3rd','Murray':'5th','Nicollet':'5th','Nobles':'5th','Norman':'9th',
+  'Olmsted':'3rd','Otter Tail':'7th','Pennington':'9th','Pine':'10th','Pipestone':'5th',
+  'Polk':'9th','Pope':'7th','Ramsey':'2nd','Red Lake':'9th','Redwood':'5th',
+  'Renville':'8th','Rice':'3rd','Rock':'5th','Roseau':'9th','Scott':'1st',
+  'Sherburne':'10th','Sibley':'1st','St. Louis':'6th','Stearns':'7th','Steele':'3rd',
+  'Stevens':'7th','Swift':'8th','Todd':'7th','Traverse':'7th','Wabasha':'3rd',
+  'Wadena':'7th','Waseca':'3rd','Washington':'10th','Watonwan':'5th','Wilkin':'7th',
+  'Winona':'3rd','Wright':'10th','Yellow Medicine':'8th'
+};
+const DN={'1st':'FIRST','2nd':'SECOND','3rd':'THIRD','4th':'FOURTH','5th':'FIFTH',
+  '6th':'SIXTH','7th':'SEVENTH','8th':'EIGHTH','9th':'NINTH','10th':'TENTH'};
+
+/* DWI charge type quick-select */
+const CT={
+  '.08'     :{desc:'Driving While Impaired, Operating a Motor Vehicle with a Blood Alcohol Concentration of .08 or More within 2 Hours of Driving',statute:'169A.20 subd. 1(5)'},
+  'UI'      :{desc:'Operating a Motor Vehicle While Under the Influence of Alcohol',statute:'169A.20 subd. 1(1)'},
+  'R'       :{desc:'Driving While Impaired, Refuse or Fail to Submit to Chemical Test',statute:'169A.20 subd. 2(1)'},
+  'cs-imp'  :{desc:'Operating a Motor Vehicle while Under the Influence of a Controlled Substance',statute:'169A.20 subd. 1(2)'},
+  'intox'   :{desc:'Operating a Motor Vehicle while Under the Influence of an Intoxicating Substance',statute:'169A.20 subd. 1(3)'},
+  'cs-cont' :{desc:'Operating a Motor Vehicle with any amount of Schedule I or Schedule III Substance',statute:'169A.20 subd. 1(7)'},
+  'cannabis':{desc:'Operating a Motor Vehicle while Under the Influence of Cannabis, THC, or Cannabis Product',statute:'169A.20 subd. 1(8)'},
+  'careless':{desc:'Careless Driving',statute:'169.13 subd. 2(a)'}
+};
+
+/* Reference statute degree → ref statute */
+const RD={'4th':'169A.27 subd. 2','3rd':'169A.26 subd. 2','2nd':'169A.25 subd. 2','1st':'169A.24 subd. 2'};
+
+/* Reference statute count by degree */
+const RSC={
+  '1st':{desc:'First Degree Driving While Impaired', statute:'169A.24 subd. 1'},
+  '2nd':{desc:'Second Degree Driving While Impaired',statute:'169A.25 subd. 1'},
+  '3rd':{desc:'Third Degree Driving While Impaired', statute:'169A.26 subd. 1'},
+  '4th':{desc:'Fourth Degree Driving While Impaired',statute:'169A.27 subd. 1'}
+};
+
+/* ═══ AI CONNECTION ═══
+   OPTION A (recommended): Cloudflare Worker proxy.
+   Paste your Worker URL below (e.g. 'https://plea-ai.yourname.workers.dev').
+   The API key lives in the Worker as a secret — never in this file —
+   so every device works with zero setup and nothing can be stolen
+   from view-source. Repo can stay public.
+
+   OPTION B: paste an Anthropic API key into EMBEDDED_API_KEY.
+   ⚠ Anyone who can open this page can read the key in view-source,
+   and public GitHub repos get keys auto-revoked. Use Option A. */
+const PROXY_URL='https://pleaai.gmannion.workers.dev';
+const EMBEDDED_API_KEY='';
+
+const ATTORNEYS={
+  'GWM':{name:'Gerard W. Mannion',   bar:'404006', email:'gmannion@geraldmiller.com'},
+  'ANB':{name:'Annaliese N. Barnes', bar:'504968', email:''},
+  'KJD':{name:'Kyle J. Dreger',      bar:'396858', email:''},
+  'BDH':{name:'Brodie D. Hacken',    bar:'391988', email:''},
+  'GAM':{name:'Gerald A. Miller',    bar:'73180',  email:''},
+};
+
+const PENALTIES={
+  'Misdemeanor':      {jail:'90',  fine:'$1,000',unit:'days in jail'},
+  'Gross Misdemeanor':{jail:'364', fine:'$3,000',unit:'days in jail'},
+  'Felony':           {jail:'',    fine:'',       unit:'years in prison'}
+};
+
+const RIGHTS=[
+  'the right to a trial to the court (judge only) or to a jury, in which I am presumed innocent until proven guilty beyond a reasonable doubt;',
+  'the right to confront and cross-examine all witnesses against me;',
+  'the right to remain silent or to testify for myself;',
+  'the right to subpoena witnesses to appear on my behalf;',
+  'the right to a pretrial hearing to contest the admissibility of evidence obtained from a search or seizure and/or information I offered to the police in the form of a written or oral statement.'
+];
+
+/* ═══════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════ */
+const S={
+  type:'dwi',
+  attyName:'Gerard W. Mannion',attyLic:'404006',attyFirm:'Gerald Miller, P.A.\n2915 Wayzata Boulevard South\nMinneapolis, MN 55405\n(612) 341-9080 Phone\n(612) 341-9079 Fax\ngmannion@geraldmiller.com',enhanceOn:false,enhanceText:'',
+  clientName:'',county:'',caseNumber:'',clientDob:'',caseNo4:false,
+  clientStreet:'',clientCityStateZip:'',clientPhone:'',clientEmail:'',showAddlClient:false,
+  charges:[{id:1,desc:'',statute:'',ref:'',ct:null,rd:null,rscDeg:'4th'}],
+  pleaSel:[],
+  rscOn:false,rscDeg:'4th',
+  redOn:false,
+  amendedCountId:null,
+  showCDPicker:false,
+  offDate:'',offCity:'',offCounty:'',facts:'',
+  level:'Misdemeanor',maxJail:'90',maxFine:'$1,000',jailUnit:'days in jail',
+  sentencing:'',terms:'',pmDate:'',
+  _nid:2
+};
+
+/* ═══════════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════════ */
+const $=id=>document.getElementById(id);
+const esc=s=>s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):'';
+const ph=s=>`<span class="p-ph">${s}</span>`;
+const sl=(w='200px')=>`<div class="p-sl" style="width:${w}"></div>`;
+
+function getAtty(){return {name:S.attyName,bar:S.attyLic,email:''};}
+function attyName(){return S.attyName||'[ATTORNEY NAME]';}
+function attyFirmLines(){
+  return (S.attyFirm||'').split('\n').map(l=>l.trim()).filter(l=>l);
+}
+function attySigBlock(){
+  const a=getAtty();
+  const nameBar=a.bar?`<strong>${attyName()} (${a.bar})</strong>`:`<strong>${attyName()}</strong>`;
+  const fl=attyFirmLines();
+  return fl.length?`${nameBar}<br>${fl.map(esc).join('<br>')}`:nameBar;
+}
+function attySigTxt(){
+  const a=getAtty();
+  const nameBar=a.bar?`${attyName()} (${a.bar})`:attyName();
+  return [nameBar,...attyFirmLines()].join('\n');
+}
+
+function fmtDob(s){if(!s)return'';const[y,m,d]=s.split('-');return`${m}/${d}/${y}`}
+function fmtLong(s){
+  if(!s)return'[DATE]';
+  const[y,m,d]=s.split('-');
+  const M=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return`${M[+m-1]} ${+d}, ${y}`;
+}
+function fmtShort(s){if(!s)return'[DATE]';const[y,m,d]=s.split('-');return`${m}/${d}/${y}`}
+function fmtPm(s){
+  if(!s)return{day:'___',month:'_________',yr:'_'};
+  const[y,m,d]=s.split('-');
+  const M=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return{day:+d,month:M[+m-1],yr:y.slice(-1)};
+}
+
+function getEffChgs(){
+  return S.charges.map((c,i)=>({...c,n:i,special:false}));
+}
+
+function buildCnt(c,n,inclRef=true,isLast=false){
+  let t=`Count ${n}: ${c.desc}`;
+  if(c.statute)t+=`, a violation of Minnesota Statute ${c.statute}`;
+  if(inclRef&&c.ref)t+=` with reference to Minnesota Statute ${c.ref}`;
+  return t+(isLast?'.':';');
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER — CHARGES (DWI)
+═══════════════════════════════════════════════════════ */
+function dwiChargeHTML(c,i){
+  const isRef     = c.ct==='ref';
+  const isOther   = c.ct==='other';
+  const hasRegRef = !isRef; // show "with reference to" degree only on non-ref charges
+  const rscDeg    = c.rscDeg||'4th';
+
+  return`
+<div class="chg-card" id="cc-${c.id}">
+  <div class="chg-hdr">
+    <span class="chg-lbl">Count ${i+1}</span>
+  </div>
+
+  <div class="row" style="margin-bottom:${isRef||isOther?'8':'4'}px">
+    <div class="f2">
+      <label>Charge</label>
+      <select onchange="setChgType(${c.id},this.value)">
+        <option value="">— Select charge —</option>
+        <optgroup label="Alcohol">
+          <option value=".08"     ${c.ct==='.08'     ?'selected':''}>.08 or More</option>
+          <option value="UI"      ${c.ct==='UI'       ?'selected':''}>Under the Influence</option>
+          <option value="R"       ${c.ct==='R'        ?'selected':''}>Refusal</option>
+        </optgroup>
+        <optgroup label="Controlled Substances">
+          <option value="cs-imp"  ${c.ct==='cs-imp'  ?'selected':''}>Controlled Substance (Impaired)</option>
+          <option value="intox"   ${c.ct==='intox'   ?'selected':''}>Intoxicating Substance</option>
+          <option value="cs-cont" ${c.ct==='cs-cont' ?'selected':''}>Controlled Substance (Contains)</option>
+          <option value="cannabis"${c.ct==='cannabis' ?'selected':''}>Cannabis</option>
+        </optgroup>
+        <optgroup label="Other">
+          <option value="ref"     ${c.ct==='ref'      ?'selected':''}>Reference Statute</option>
+          <option value="careless"${c.ct==='careless' ?'selected':''}>Careless Driving</option>
+          <option value="other"   ${c.ct==='other'    ?'selected':''}>Other</option>
+        </optgroup>
+      </select>
+    </div>
+    ${isRef?`
+    <div class="f1">
+      <label>Degree</label>
+      <select onchange="setRscChgDeg(${c.id},this.value)">
+        <option value="1st"${rscDeg==='1st'?'selected':''}>1st Degree</option>
+        <option value="2nd"${rscDeg==='2nd'?'selected':''}>2nd Degree</option>
+        <option value="3rd"${rscDeg==='3rd'?'selected':''}>3rd Degree</option>
+        <option value="4th"${rscDeg==='4th'?'selected':''}>4th Degree</option>
+      </select>
+    </div>`:hasRegRef?`
+    <div class="f1">
+      <label>With reference to</label>
+      <select onchange="setRefDeg(${c.id},this.value)">
+        <option value="">— None —</option>
+        <option value="4th"${c.rd==='4th'?'selected':''}>4th Degree</option>
+        <option value="3rd"${c.rd==='3rd'?'selected':''}>3rd Degree</option>
+        <option value="2nd"${c.rd==='2nd'?'selected':''}>2nd Degree</option>
+        <option value="1st"${c.rd==='1st'?'selected':''}>1st Degree</option>
+      </select>
+    </div>`:''}
+  </div>
+
+  <div style="margin-bottom:8px">
+    <label>Description</label>
+    <textarea rows="2" oninput="updChg(${c.id},'desc',this.value)"
+      placeholder="${isOther?'Type the charge description here':'Auto-filled from charge selection above'}">${esc(c.desc)}</textarea>
+  </div>
+  <div class="row" style="margin-bottom:4px">
+    <div class="f1">
+      <label>Charge statute</label>
+      <input value="${esc(c.statute)}" oninput="updChg(${c.id},'statute',this.value)"
+        placeholder="${isOther?'e.g., 169A.20 subd. 1(5)':'auto-filled'}" />
+    </div>
+    ${hasRegRef?`
+    <div class="f1">
+      <label>Reference statute</label>
+      <input value="${esc(c.ref)}" oninput="updChg(${c.id},'ref',this.value)" placeholder="e.g., 169A.27 subd. 2" />
+    </div>`:''}
+  </div>
+</div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER — CHARGES (Standard)
+═══════════════════════════════════════════════════════ */
+function stdChargeHTML(c,i){
+  const only=S.charges.length===1;
+  return`
+<div class="chg-card" id="cc-${c.id}">
+  <div class="chg-hdr">
+    <span class="chg-lbl">Count ${i+1}</span>
+    ${!only?`<button class="btn btn-sm btn-danger" onclick="remChg(${c.id})">Remove</button>`:''}
+  </div>
+  <div style="margin-bottom:8px">
+    <label>Charge description</label>
+    <textarea rows="2" oninput="updChg(${c.id},'desc',this.value)" placeholder="e.g., 4th Degree Assault">${esc(c.desc)}</textarea>
+  </div>
+  <div class="row">
+    <div class="f2">
+      <label>Charge statute</label>
+      <input value="${esc(c.statute)}" oninput="updChg(${c.id},'statute',this.value)" placeholder="609.2231.1(c)(2)" />
+    </div>
+  </div>
+</div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER — PLEA SELECTOR
+═══════════════════════════════════════════════════════ */
+function renderPlea(){
+  const el=$('plea-sec');if(!el)return;
+  const eff=getEffChgs();
+  let h='';
+
+  if(S.type==='dwi'){
+    const hasAmend=S.amendedCountId!==null;
+    const amendedChg=hasAmend?eff.find(c=>String(c.id)===String(S.amendedCountId)):null;
+    const amendedN=amendedChg?eff.indexOf(amendedChg)+1:null;
+
+    h+=`<div style="margin-bottom:12px;padding:10px;border-radius:8px;background:${hasAmend?'var(--blue-bg)':'#f9fafb'};border:1.5px solid ${hasAmend?'var(--blue-bd)':'var(--border)'}">`;
+    h+=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;font-weight:500;color:var(--muted)">Careless Driving amendment:</span>`;
+
+    if(!hasAmend){
+      // Show button + picker if open
+      h+=`<button class="qbtn${S.showCDPicker?' on':''}" onclick="clickCareless()">${S.showCDPicker?'Cancel':'Careless Driving'}</button>`;
+      if(S.showCDPicker&&eff.length){
+        h+=`<span style="font-size:11px;color:var(--muted)">Which count?</span>`;
+        eff.forEach((c,n)=>{
+          h+=`<button class="dbtn" onclick="selectAmended('${c.id}')" style="background:var(--gold);color:#0D1424;border-color:var(--gold)">Count ${n+1}</button>`;
+        });
+      }
+    } else {
+      // Show the amendment + clear button
+      h+=`<span style="font-size:13px;font-weight:600;color:var(--gold)">AMENDED COUNT ${amendedN}: Careless Driving</span>`;
+      h+=`<button class="btn btn-sm btn-danger" onclick="clearAmended()">× Clear</button>`;
+    }
+    h+=`</div></div>`;
+  }
+
+  eff.forEach((c,n)=>{
+    const sid=String(c.id);
+    const isAmended=S.amendedCountId!==null&&String(S.amendedCountId)===sid;
+    const on=isAmended||S.pleaSel.includes(c.id)||S.pleaSel.includes(sid);
+    const desc=c.desc||'(no description entered)';
+    const statTxt=c.statute?` — Minn. Stat. §${c.statute}`:'';
+    h+=`<div class="plea-row ${on?'plea-on':'plea-off'}" onclick="${isAmended?'':  `togPlea('${sid}')`}">
+      <input type="checkbox" class="plea-cb" ${on?'checked':''} ${isAmended?'disabled':''}
+        onclick="event.stopPropagation();togPlea('${sid}')" />
+      <span class="plea-txt">
+        ${isAmended
+          ?`<strong>AMENDED COUNT ${n+1}:</strong> Careless Driving — Minn. Stat. §169.13 subd. 2(a)<span class="badge" style="background:#dbeafe;color:#1e40af">Amended</span>`
+          :`<strong>Count ${n+1}:</strong> ${esc(desc)}<span style="color:var(--muted)">${esc(statTxt)}</span>${c.special?`<span class="badge">${c.badge}</span>`:''}`
+        }
+      </span>
+    </div>`;
+  });
+  if(!eff.length)h+='<p style="font-size:13px;color:var(--muted)">Add charges above first.</p>';
+  el.innerHTML=h;
+}
+
+function renderChgSec(){
+  const el=$('chg-sec');if(!el)return;
+  const isDwi=S.type==='dwi';
+  const n=S.charges.length;
+  let h=`<div class="row" style="margin-bottom:12px;align-items:flex-end">
+    <div style="flex:0 0 auto">
+      <label>Number of counts</label>
+      <select onchange="setCountNum(+this.value)" style="width:auto;min-width:80px">
+        ${Array.from({length:10},(_,i)=>`<option${i+1===n?' selected':''}>${i+1}</option>`).join('')}
+      </select>
+    </div>
+  </div>`;
+  S.charges.forEach((c,i)=>{h+=isDwi?dwiChargeHTML(c,i):stdChargeHTML(c,i);});
+  el.innerHTML=h;
+  renderPlea();
+  refreshPleaOptions();
+}
+
+/* ── Dynamic "Pleading to" selector (auto-fill card) ──
+   Options track the live count list: Count 1..N, Amended Count, Multiple Counts.
+   Selection applies directly to S.pleaSel / S.amendedCountId — no AI needed. */
+function refreshPleaOptions(){
+  const sel=$('ai-plea-sel');if(!sel)return;
+  const n=S.charges.length;
+  const prev=sel.value;
+  let h='<option value="">— Select —</option>';
+  for(let i=1;i<=n;i++)h+=`<option value="c${i}">Count ${i}</option>`;
+  h+='<option value="amended">Amended Count</option>';
+  if(n>1)h+='<option value="multi">Multiple Counts</option>';
+  sel.innerHTML=h;
+  // Preserve previous selection if still valid
+  if([...sel.options].some(o=>o.value===prev))sel.value=prev;
+  buildMultiChecks();
+}
+
+function buildMultiChecks(){
+  const w=$('ai-multi-wrap');if(!w)return;
+  const n=S.charges.length;
+  let h='';
+  for(let i=1;i<=n;i++){
+    h+=`<label style="display:flex;align-items:center;gap:6px;font-size:13px;margin:3px 0;cursor:pointer">
+      <input type="checkbox" class="ai-multi-cb" value="c${i}" onchange="applyPleaSelection()" /> Count ${i}
+    </label>`;
+  }
+  h+=`<label style="display:flex;align-items:center;gap:6px;font-size:13px;margin:3px 0;cursor:pointer">
+    <input type="checkbox" class="ai-multi-cb" value="amended" onchange="applyPleaSelection()" /> Amended Count
+  </label>`;
+  w.innerHTML=h;
+}
+
+function onPleaChoice(){
+  const v=$('ai-plea-sel').value;
+  $('ai-multi-wrap').style.display=v==='multi'?'block':'none';
+  $('ai-amend-wrap').style.display=(v==='amended')?'block':'none';
+  applyPleaSelection();
+}
+
+/* Apply the dropdown/checkbox choice straight into petition state */
+function applyPleaSelection(){
+  const sel=$('ai-plea-sel');if(!sel)return;
+  const v=sel.value;
+  if(!v)return; // nothing chosen — leave manual selections alone
+
+  const picked=[];        // count numbers (1-based)
+  let wantAmend=false;
+
+  if(v==='multi'){
+    document.querySelectorAll('.ai-multi-cb:checked').forEach(cb=>{
+      if(cb.value==='amended')wantAmend=true;
+      else picked.push(parseInt(cb.value.slice(1),10));
+    });
+    $('ai-amend-wrap').style.display=wantAmend?'block':'none';
+  }else if(v==='amended'){
+    wantAmend=true;
+  }else if(v.startsWith('c')){
+    picked.push(parseInt(v.slice(1),10));
+  }
+
+  // Map count numbers → charge ids
+  S.pleaSel=[];
+  picked.forEach(nb=>{const c=S.charges[nb-1];if(c)S.pleaSel.push(c.id)});
+
+  // Amended: parse "Count 3 ..." from the amend box to find which count
+  if(wantAmend){
+    const t=($('ai-amend')?$('ai-amend').value:'')||'';
+    const m=t.match(/count\s*(\d+)/i);
+    if(m){
+      const c=S.charges[parseInt(m[1],10)-1];
+      if(c){
+        S.amendedCountId=c.id;
+        S.pleaSel=S.pleaSel.filter(id=>id!==c.id);
+      }
+    }
+  }else{
+    S.amendedCountId=null;
+  }
+  renderPlea();
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER — TYPE FIELDS
+═══════════════════════════════════════════════════════ */
+function renderTF(){
+  const tf=$('tf'),dw=$('dob-wrap'),lbl=$('lbl-cn');
+  if(S.type==='pm'){
+    dw.style.display='none';lbl.textContent='District court file no.';
+    tf.innerHTML=pmFieldsHTML();
+    const ew=$('ai-enh-wrap');if(ew)ew.style.display='none';
+    return;
+  }
+  dw.style.display='';lbl.textContent='Case number';
+
+  const penOk=S.level!=='Felony';
+  const isDwi=S.type==='dwi';
+  tf.innerHTML=`
+  <div class="card">
+    <div class="sec-hdr">Charges filed</div>
+    <div id="chg-sec"></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Plea — count(s) pleading guilty to</div>
+    <div id="plea-sec"></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Offense details & factual basis</div>
+    <div class="row">
+      <div class="f1"><label>Date of offense</label><input type="date" id="f-od" value="${esc(S.offDate)}" oninput="S.offDate=this.value" /></div>
+      <div class="f1"><label>City of offense</label><input id="f-oc" value="${esc(S.offCity)}" oninput="S.offCity=this.value" placeholder="Robbinsdale" /></div>
+      <div class="f1"><label>County of offense</label><input id="f-oco" value="${esc(S.offCounty||S.county)}" oninput="S.offCounty=this.value" placeholder="Hennepin" /></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <label style="margin:0">Facts / factual basis</label>
+      ${isDwi?`<button class="btn btn-sm" onclick="autoFacts()">Auto-fill standard DWI facts</button>`:''}
+    </div>
+    <textarea id="f-facts" rows="5" oninput="S.facts=this.value"
+      placeholder="${isDwi?'Click Auto-fill or enter the factual basis for the plea.':'Describe what the defendant did. Appears below \'I did the following:\''}"
+    >${esc(S.facts)}</textarea>
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Charge level & maximum penalties</div>
+    <div class="row">
+      <div class="f1"><label>Charge level</label>
+        <select onchange="changeLevel(this.value)">
+          ${['Misdemeanor','Gross Misdemeanor','Felony'].map(l=>`<option${S.level===l?' selected':''}>${l}</option>`).join('')}
+        </select>
+      </div>
+      <div class="f1"><label>Maximum fine</label><input id="f-fine" value="${esc(S.maxFine)}" oninput="onFineInput(this)" placeholder="$1,000" /></div>
+      <div class="f1"><label>Maximum incarceration</label><input id="f-jail" value="${esc(S.maxJail)}" oninput="S.maxJail=this.value" placeholder="90" /></div>
+      <div class="f1"><label>Unit</label>
+        <select onchange="S.jailUnit=this.value">
+          <option${S.jailUnit==='days in jail'?' selected':''}>days in jail</option>
+          <option${S.jailUnit==='years in prison'?' selected':''}>years in prison</option>
+        </select>
+      </div>
+    </div>
+    ${penOk?`<div class="notice notice-ok">Auto-filled: ${S.level} — ${S.maxFine} max fine / ${S.maxJail} ${S.jailUnit}</div>`:''}
+  </div>
+
+  <div class="card">
+    <div class="sec-hdr">Sentencing agreement (paragraph 9)</div>
+    <textarea id="f-sent" rows="4" oninput="S.sentencing=this.value"
+      placeholder="e.g., Plead Guilty to Count 2. 90 days in jail, with 89 days stayed for 2 years to Hennepin County Probation..."
+    >${esc(S.sentencing)}</textarea>
+  </div>
+
+  ${(!isDwi&&S.enhanceOn)?`<div class="card">
+    <div class="sec-hdr">Enhanceability (paragraph 11)</div>
+    <textarea id="f-enhtxt" rows="4" oninput="S.enhanceText=this.value"
+      placeholder="Type the enhanceability language for this offense — it will appear as numbered paragraph 11 above the signature lines."
+    >${esc(S.enhanceText)}</textarea>
+  </div>`:''}`;
+
+  // Sync top checkbox state + visibility (hidden for Petty petition)
+  const enhWrap=$('ai-enh-wrap');
+  if(enhWrap)enhWrap.style.display=S.type==='pm'?'none':'flex';
+  const enhCb=$('ai-enh');
+  if(enhCb)enhCb.checked=S.enhanceOn;
+
+  renderChgSec();
+}
+
+function pmFieldsHTML(){
+  const pd=fmtPm(S.pmDate);
+  return`
+  <div class="card">
+    <div class="sec-hdr">Terms & conditions</div>
+    <textarea id="f-terms" rows="6" oninput="S.terms=this.value"
+      placeholder="Enter the conditions of the stay of adjudication...">${esc(S.terms)}</textarea>
+  </div>
+  <div class="card">
+    <div class="sec-hdr">Signature date</div>
+    <div class="row">
+      <div class="f1"><label>Date</label><input type="date" id="f-pmd" value="${esc(S.pmDate)}" oninput="S.pmDate=this.value;renderTF()" /></div>
+      <div style="flex:2;display:flex;align-items:flex-end;padding-bottom:2px">
+        ${S.pmDate?`<span style="font-size:12px;color:var(--muted)">→ "Dated this ${pd.day} day of ${pd.month}, 202${pd.yr}"</span>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   STATE HANDLERS
+═══════════════════════════════════════════════════════ */
+function setType(t){
+  S.type=t;
+  const sel=$('type-select');if(sel)sel.value=t;
+  renderTF();
+}
+
+function onCounty(){
+  S.county=$('s-county').value;
+  const d=CD[S.county]||'';
+  $('s-district').value=DN[d]?`${DN[d]} JUDICIAL DISTRICT`:'';
+  // Mirror county into offense details if that field exists
+  S.offCounty=S.county;
+  const oco=$('f-oco');if(oco)oco.value=S.county;
+}
+
+function addChg(){S.charges.push({id:S._nid++,desc:'',statute:'',ref:'',ct:null,rd:null,rscDeg:'4th'});renderChgSec()}
+function remChg(id){
+  S.charges=S.charges.filter(c=>c.id!==id);
+  S.pleaSel=S.pleaSel.filter(p=>p!==id&&p!==String(id));
+  if(String(S.amendedCountId)===String(id))S.amendedCountId=null;
+  renderChgSec();
+}
+
+function setCountNum(n){
+  const cur=S.charges.length;
+  if(n>cur){
+    for(let i=cur;i<n;i++)S.charges.push({id:S._nid++,desc:'',statute:'',ref:'',ct:null,rd:null,rscDeg:'4th'});
+  }else if(n<cur){
+    const removed=S.charges.slice(n).map(c=>String(c.id));
+    S.charges=S.charges.slice(0,n);
+    S.pleaSel=S.pleaSel.filter(p=>!removed.includes(String(p)));
+    if(removed.includes(String(S.amendedCountId)))S.amendedCountId=null;
+  }
+  renderChgSec();
+}
+
+function updChg(id,f,v){
+  const c=S.charges.find(x=>x.id===id);
+  if(c)c[f]=v;
+}
+
+function setChgType(id,type){
+  const c=S.charges.find(x=>x.id===id);if(!c)return;
+  c.ct=type||null;
+  if(CT[type]){
+    // .08, UI, R, careless — auto-fill from constants
+    c.desc=CT[type].desc;c.statute=CT[type].statute;
+  } else if(type==='ref'){
+    // Reference statute — fill from RSC based on current rscDeg
+    const info=RSC[c.rscDeg||'4th'];
+    c.desc=info.desc;c.statute=info.statute;
+    c.ref='';c.rd=null; // clear "with reference to" since this IS the ref count
+  } else if(type==='other'){
+    c.desc='';c.statute=''; // clear for user to type
+  }
+  renderChgSec();
+}
+
+function setRscChgDeg(id,deg){
+  // Updates the RSC degree on a charge set to type='ref'
+  const c=S.charges.find(x=>x.id===id);if(!c)return;
+  c.rscDeg=deg;
+  if(c.ct==='ref'){const info=RSC[deg];c.desc=info.desc;c.statute=info.statute;}
+  renderChgSec();
+}
+
+function setRefDeg(id,deg){
+  const c=S.charges.find(x=>x.id===id);if(!c)return;
+  if(!deg){c.rd=null;c.ref='';renderChgSec();return;}
+  c.rd=deg;c.ref=RD[deg];
+  renderChgSec();
+}
+
+function clrRef(id){
+  const c=S.charges.find(x=>x.id===id);if(!c)return;
+  c.rd=null;c.ref='';renderChgSec();
+}
+
+function togPlea(sid){
+  const numId=isNaN(sid)?sid:Number(sid);
+  const has=S.pleaSel.includes(numId)||S.pleaSel.includes(sid);
+  if(has){S.pleaSel=S.pleaSel.filter(p=>p!==numId&&p!==sid)}
+  else{S.pleaSel.push(numId)}
+  renderPlea();
+}
+
+function toggleRed(v){S.redOn=v;if(!v){S.pleaSel=S.pleaSel.filter(p=>p!=='red')}renderChgSec()}
+
+// Careless Driving amendment handlers
+function clickCareless(){
+  S.showCDPicker=!S.showCDPicker;
+  renderPlea();
+}
+function selectAmended(sid){
+  S.amendedCountId=isNaN(sid)?sid:Number(sid);
+  S.showCDPicker=false;
+  renderPlea();
+}
+function clearAmended(){
+  S.amendedCountId=null;
+  S.showCDPicker=false;
+  renderPlea();
+}
+
+function changeLevel(lv){
+  S.level=lv;const p=PENALTIES[lv];
+  S.maxJail=p.jail;S.maxFine=p.fine;S.jailUnit=p.unit;
+  renderTF();
+}
+
+function autoFacts(){
+  const d=$('f-od')?.value||S.offDate;
+  const ci=$('f-oc')?.value||S.offCity;
+  const co=$('f-oco')?.value||S.offCounty;
+  S.offDate=d;S.offCity=ci;S.offCounty=co;
+  const txt=`On or about ${fmtLong(d)}, in the city of ${ci||'[CITY]'}, ${co||'[COUNTY]'} County, Minnesota: I was driving a motor vehicle when I was stopped by law enforcement. Prior to driving, I had consumed alcohol. While speaking with the officer, they noticed signs that I may be impaired. I was then asked to step out of the vehicle to perform a series of field sobriety tests. I performed poorly on those tests and was subsequently arrested on suspicion of driving while impaired. While at the station, I was read the Minnesota Breath Test Advisory and agreed to take a breath test. The results of that test showed my Blood Alcohol Concentration to be .08 or more, and that test was taken within 2 hours of driving.`;
+  S.facts=txt;const ta=$('f-facts');if(ta)ta.value=txt;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PREVIEW
+═══════════════════════════════════════════════════════ */
+function syncFields(){
+  const g=(id,k)=>{const e=$(id);if(e)S[k]=e.value};
+  g('g-aname','attyName');g('g-alic','attyLic');g('g-afirm','attyFirm');
+  g('s-name','clientName');g('s-dob','clientDob');g('s-caseno','caseNumber');g('s-county','county');
+  g('s-cstreet','clientStreet');g('s-ccsz','clientCityStateZip');g('s-cphone','clientPhone');g('s-cemail','clientEmail');
+  g('f-od','offDate');g('f-oc','offCity');g('f-oco','offCounty');g('f-facts','facts');
+  g('f-fine','maxFine');g('f-jail','maxJail');g('f-sent','sentencing');
+  g('f-terms','terms');g('f-pmd','pmDate');g('f-enhtxt','enhanceText');
+}
+
+/* ── Auto-format helpers ────────────────────────────────
+   Case number: XX-XX-XXXXX...  (dashes auto-inserted after positions 2 and 4)
+   Phone:       (XXX) XXX-XXXX
+   Both preserve cursor position so editing in the middle works naturally. */
+function fmtCaseNo(v){
+  const clean=v.replace(/-/g,'').toUpperCase();
+  // First section: 2 digits (default) or 4 digits (when "Add digits" checked)
+  const a=S.caseNo4?4:2;
+  const b=a+2, c=a+4;
+  let out='';
+  for(let i=0;i<clean.length;i++){
+    if(i===a||i===b||i===c)out+='-';
+    out+=clean[i];
+  }
+  return out;
+}
+function reformatCaseNo(){
+  const e=$('s-caseno');
+  if(!e)return;
+  e.value=fmtCaseNo(e.value);
+  S.caseNumber=e.value;
+}
+function fmtPhone(v){
+  const d=v.replace(/\D/g,'').slice(0,10);
+  if(!d)return '';
+  if(d.length<=3)return `(${d}`;
+  if(d.length<=6)return `(${d.slice(0,3)}) ${d.slice(3)}`;
+  return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+}
+function fmtFine(v){
+  const d=v.replace(/[^\d]/g,'');
+  if(!d)return '';
+  return '$'+parseInt(d,10).toLocaleString('en-US');
+}
+function applyFmt(input,formatter,stateKey){
+  const oldVal=input.value;
+  const oldPos=input.selectionStart||0;
+  const charsBefore=oldVal.slice(0,oldPos).replace(/[^A-Za-z0-9]/g,'').length;
+  const formatted=formatter(oldVal);
+  let newPos=formatted.length, counted=0;
+  for(let i=0;i<formatted.length;i++){
+    if(/[A-Za-z0-9]/.test(formatted[i]))counted++;
+    if(counted===charsBefore){newPos=i+1;break}
+  }
+  input.value=formatted;
+  try{input.setSelectionRange(newPos,newPos)}catch(e){}
+  S[stateKey]=formatted;
+}
+function onCaseNoInput(input){
+  // If the typed/pasted value contains dashes, detect first-section length
+  const raw=input.value;
+  if(raw.includes('-')){
+    const first=raw.split('-')[0].trim();
+    if(first.length>=4&&!S.caseNo4){
+      S.caseNo4=true;
+      const cb=$('s-cn4');if(cb)cb.checked=true;
+    }else if(first.length>0&&first.length<=2&&S.caseNo4&&raw.split('-').length>2){
+      // pasted a clearly 2-digit-first-section number — uncheck
+      S.caseNo4=false;
+      const cb=$('s-cn4');if(cb)cb.checked=false;
+    }
+  }
+  applyFmt(input,fmtCaseNo,'caseNumber');
+}
+function onPhoneInput(input){applyFmt(input,fmtPhone,'clientPhone')}
+function onFineInput(input){applyFmt(input,fmtFine,'maxFine')}
+
+function showPreview(){
+  syncFields();
+  $('fv').style.display='none';$('pv').style.display='block';
+  document.querySelector('.app').classList.add('preview-mode');
+  $('drv-status').innerHTML='';
+  paginatePreview(buildPvHTML());
+  setupEditAutoflow();
+}
+function showForm(){
+  $('pv').style.display='none';$('fv').style.display='block';
+  document.querySelector('.app').classList.remove('preview-mode');
+}
+
+/* ── Auto-reflow on edit ──
+   Pages are locked at exactly 11in tall (overflow:hidden). When user types past
+   the bottom of a page, we detect it and re-paginate so content jumps to the
+   next page. Caret position is preserved by counting text-offset within the
+   whole petition, then walking text nodes after rebuild to restore it. */
+let _editListenerAttached=false;
+let _paginateTimer=null;
+let _caretOffset=null;
+
+function setupEditAutoflow(){
+  if(_editListenerAttached)return;
+  const c=$('petition-doc');
+  c.addEventListener('input',schedulePaginate);
+  _editListenerAttached=true;
+}
+
+function schedulePaginate(){
+  captureCaretOffset();
+  clearTimeout(_paginateTimer);
+  _paginateTimer=setTimeout(()=>{
+    paginatePreview();
+    restoreCaretOffset();
+  },300);
+}
+
+function captureCaretOffset(){
+  const root=$('petition-doc');
+  const sel=window.getSelection();
+  if(!sel||sel.rangeCount===0){_caretOffset=null;return}
+  const anchor=sel.anchorNode;
+  if(!anchor||!root.contains(anchor)){_caretOffset=null;return}
+  try{
+    const r=document.createRange();
+    r.selectNodeContents(root);
+    r.setEnd(anchor,sel.anchorOffset);
+    _caretOffset=r.toString().length;
+  }catch(e){_caretOffset=null}
+}
+
+function restoreCaretOffset(){
+  if(_caretOffset===null)return;
+  const root=$('petition-doc');
+  let remaining=_caretOffset;
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);
+  let node;
+  while((node=walker.nextNode())){
+    const len=node.nodeValue.length;
+    if(remaining<=len){
+      try{
+        const range=document.createRange();
+        range.setStart(node,remaining);
+        range.collapse(true);
+        const sel=window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        // Bring containing page into view + focus it
+        const page=node.parentElement&&node.parentElement.closest('.page');
+        if(page){
+          page.focus({preventScroll:true});
+          page.scrollIntoView({block:'nearest',behavior:'smooth'});
+        }
+      }catch(e){}
+      return;
+    }
+    remaining-=len;
+  }
+}
+
+/* Auto-paginate: distributes top-level blocks into letter-sized .page
+   containers. Each .page is 8.5×11in with 1in padding (matching print).
+   Pure measurement-based — content fits exactly the same in preview and print. */
+function paginatePreview(htmlOverride){
+  const c=$('petition-doc');
+  let html;
+  if(htmlOverride!==undefined){
+    html=htmlOverride;
+  }else{
+    // Repagination: gather current content from existing pages
+    const chunks=[];
+    c.querySelectorAll('.page').forEach(p=>chunks.push(p.innerHTML));
+    html=chunks.join('');
+  }
+
+  // PM petition is one page by design
+  if(S.type==='pm'){
+    c.innerHTML=`<div class="page" data-page="1" data-of="1" contenteditable="true" spellcheck="true">${html}</div>`;
+    return;
+  }
+
+  // Render into a hidden measurement page with identical CSS context
+  const m=document.createElement('div');
+  m.className='page';
+  Object.assign(m.style,{position:'absolute',left:'-99999px',top:'0',visibility:'hidden',margin:'0',boxShadow:'none',height:'auto',overflow:'visible'});
+  m.innerHTML=html;
+  document.body.appendChild(m);
+
+  // Usable content area = 11in - 2*1in padding = 9in = 864 CSS px at 96dpi
+  const USABLE=9*96;
+  const blocks=Array.from(m.children);
+  const pages=[[]];
+  let h=0;
+
+  blocks.forEach(b=>{
+    const r=b.getBoundingClientRect();
+    const cs=getComputedStyle(b);
+    const mt=parseFloat(cs.marginTop)||0;
+    const mb=parseFloat(cs.marginBottom)||0;
+    const bh=r.height+mb+(pages[pages.length-1].length===0?0:mt);
+    if(h+bh>USABLE && pages[pages.length-1].length>0){
+      pages.push([]);
+      h=0;
+    }
+    pages[pages.length-1].push(b.outerHTML);
+    h+=bh;
+  });
+
+  document.body.removeChild(m);
+
+  const total=pages.length;
+  c.innerHTML=pages.map((g,i)=>
+    `<div class="page" data-page="${i+1}" data-of="${total}" contenteditable="true" spellcheck="true">${g.join('')}</div>`
+  ).join('');
+}
+
+function buildPvHTML(){return S.type==='pm'?buildPmPV():buildMainPV()}
+
+function buildPmPV(){
+  const pd=fmtPm(S.pmDate);
+  const co=S.county?S.county.toUpperCase():ph('[COUNTY]');
+  const dist=CD[S.county]||'';
+  const dn=DN[dist]||ph('[DISTRICT]');
+  const cn=S.caseNumber||ph('[FILE NO]');
+  const nm=S.clientName||ph('[CLIENT]');
+  const _a=getAtty();
+  const attyDisplayName=attyName();
+  const attyNameLine=_a.bar?`<strong>${attyDisplayName}</strong> (${_a.bar})`:`<strong>${attyDisplayName}</strong>`;
+  return`
+<div class="p-hdr-row"><span>STATE OF MINNESOTA</span><span>DISTRICT COURT</span></div>
+<div class="p-hdr-row"><span>COUNTY OF ${co}</span><span>${dn} JUDICIAL DISTRICT</span></div>
+<hr class="p-rule">
+
+<table class="p-cap">
+  <tr>
+    <td style="width:50%">State of Minnesota,</td>
+    <td style="width:50%;white-space:nowrap">District Court File No. ${cn}</td>
+  </tr>
+  <tr><td class="p-cap-gap">&nbsp;</td><td></td></tr>
+  <tr>
+    <td class="p-cap-indent">Plaintiff,</td>
+    <td></td>
+  </tr>
+  <tr><td class="p-cap-gap">&nbsp;</td><td></td></tr>
+  <tr>
+    <td>-vs-</td>
+    <td style="font-weight:700">PETITION TO ENTER<br>PLEA OF GUILTY TO<br>PETTY MISDEMEANOR</td>
+  </tr>
+  <tr><td class="p-cap-gap">&nbsp;</td><td></td></tr>
+  <tr>
+    <td>${nm},</td>
+    <td></td>
+  </tr>
+  <tr><td class="p-cap-gap">&nbsp;</td><td></td></tr>
+  <tr>
+    <td class="p-cap-indent">Defendant.</td>
+    <td></td>
+  </tr>
+</table>
+<hr class="p-rule">
+
+<div style="margin-top:1.8em;line-height:1.4">The State of Minnesota agrees to a stay of adjudication on the petty misdemeanor charge in the above-entitled matter, subject to the Court's approval. The following conditions shall apply:</div>
+
+<div style="margin-top:1.8em">
+  <div style="margin-bottom:0.6em"><strong>1.&emsp;TERMS</strong></div>
+  <div style="padding-left:0.5in;white-space:pre-wrap;line-height:1.4">${S.terms||ph('[Enter terms in form]')}</div>
+</div>
+
+<div style="display:flex;gap:0.5in;margin-top:2.4em">
+  <div style="flex:1"><div class="p-sig-space"></div><div class="p-sig-line"></div><div class="p-sig-label">Prosecutor</div></div>
+  <div style="flex:1"><div class="p-sig-space"></div><div class="p-sig-line"></div><div class="p-sig-label">Date</div></div>
+</div>
+
+<div style="display:flex;gap:0.5in;margin-top:0.5em">
+  <div style="flex:1">
+    <div class="p-sig-space"></div><div class="p-sig-line"></div><div class="p-sig-label"><strong>${nm}</strong><br>Defendant${(S.clientStreet||S.clientCityStateZip||S.clientPhone||S.clientEmail)?'<br>'+[esc(S.clientStreet),esc(S.clientCityStateZip),esc(S.clientPhone),esc(S.clientEmail)].filter(x=>x).join('<br>'):''}</div>
+  </div>
+  <div style="flex:1"><div class="p-sig-space"></div><div class="p-sig-line"></div><div class="p-sig-label">Date</div></div>
+</div>
+
+<div style="display:flex;gap:0.5in;margin-top:0.5em">
+  <div style="flex:1"><div class="p-sig-space"></div><div class="p-sig-line"></div><div class="p-sig-label">${attyNameLine}<br>Attorney for Defendant</div></div>
+  <div style="flex:1"><div class="p-sig-space"></div><div class="p-sig-line"></div><div class="p-sig-label">Date</div></div>
+</div>
+
+<div style="display:flex;gap:0.5in;margin-top:0.5em">
+  <div style="flex:1"><div class="p-sig-space"></div><div class="p-sig-line"></div><div class="p-sig-label">Judge of District Court</div></div>
+  <div style="flex:1"><div class="p-sig-space"></div><div class="p-sig-line"></div><div class="p-sig-label">Date</div></div>
+</div>`;
+}
+
+function buildCntHTML(c,n,inclRef=true,amended=false,isLast=false){
+  const end=isLast?'.':';';
+  if(amended){
+    return`<strong>AMENDED COUNT ${n}:</strong> Careless Driving, a violation of Minnesota Statute 169.13 subd. 2(a)${end}`;
+  }
+  let desc=c.desc||'';
+  if(c.statute)desc+=`, a violation of Minnesota Statute ${c.statute}`;
+  if(inclRef&&c.ref)desc+=` with reference to Minnesota Statute ${c.ref}`;
+  return`<strong>Count ${n}:</strong> ${esc(desc)}${end}`;
+}
+
+function buildMainPV(){
+  const co=S.county?S.county.toUpperCase():ph('[COUNTY]');
+  const d=CD[S.county]||'';
+  const dn=DN[d]?`${DN[d]} JUDICIAL DISTRICT`:ph('[DISTRICT] JUDICIAL DISTRICT');
+  const nm=S.clientName||ph('[CLIENT NAME]');
+  const dob=fmtDob(S.clientDob)||ph('[DOB]');
+  const cn=S.caseNumber||ph('[CASE NO]');
+  const isDwi=S.type==='dwi';
+  const eff=getEffChgs();
+  const pleaCs=eff.filter(c=>S.pleaSel.includes(c.id)||S.pleaSel.includes(String(c.id)));
+  const inc=`${S.maxJail} ${S.jailUnit}`;
+
+  /* ── charge list (italic) ── */
+  let cHtml='';
+  eff.forEach((c,n)=>{
+    const isLast=n===eff.length-1;
+    cHtml+=`<div class="p-count-i">${buildCntHTML(c,n+1,isDwi,false,isLast)}</div>`;
+  });
+
+  /* ── plea list (italic; amended count uses "Amended Count N") ── */
+  const amendedIdx=S.amendedCountId!==null?eff.findIndex(c=>String(c.id)===String(S.amendedCountId)):-1;
+  const pleaSet=new Set([...pleaCs.map(c=>String(c.id))]);
+  if(amendedIdx>=0)pleaSet.add(String(eff[amendedIdx].id));
+  const pleaLblList=[];
+  let pHtml='';
+  if(pleaSet.size){
+    const pleaItems=[];
+    eff.forEach((c,n)=>{
+      if(!pleaSet.has(String(c.id)))return;
+      const isAmend=amendedIdx>=0&&String(c.id)===String(eff[amendedIdx].id);
+      pleaItems.push({c,n,isAmend});
+      pleaLblList.push(isAmend?`Amended Count ${n+1}`:`Count ${n+1}`);
+    });
+    pleaItems.forEach(({c,n,isAmend},i)=>{
+      const isLast=i===pleaItems.length-1;
+      pHtml+=`<div class="p-count-i">${buildCntHTML(c,n+1,isDwi,isAmend,isLast)}</div>`;
+    });
+  }else{
+    pHtml=`<div class="p-count">${ph('[Select plea counts above]')}</div>`;
+  }
+  /* Format count list with proper grammar:
+     1: "Count 1"
+     2: "Counts 1 and 2"  (or "Count 1 and Amended Count 3" when mixed)
+     3+: "Counts 1, 2, and 3"  (Oxford comma)
+     If any item is an Amended Count, keep full labels and join individually. */
+  const fmtCountList=(labels,bold)=>{
+    if(!labels.length)return '';
+    const wrap=l=>bold?`<strong>${l}</strong>`:l;
+    if(labels.length===1)return wrap(labels[0]);
+    const allRegular=labels.every(l=>/^Count \d+$/.test(l));
+    if(allRegular){
+      const nums=labels.map(l=>l.replace('Count ',''));
+      const phrase=nums.length===2
+        ?`Counts ${nums[0]} and ${nums[1]}`
+        :`Counts ${nums.slice(0,-1).join(', ')}, and ${nums[nums.length-1]}`;
+      return wrap(phrase);
+    }
+    // Mixed (has amended): bold each individually, join with Oxford comma
+    const items=labels.map(wrap);
+    return items.length===2
+      ?`${items[0]} and ${items[1]}`
+      :`${items.slice(0,-1).join(', ')}, and ${items[items.length-1]}`;
+  };
+  const pleaLbls2=fmtCountList(pleaLblList,false);
+  const pleaLbls2Html=fmtCountList(pleaLblList,true);
+
+  /* ── paragraph 3 ── */
+  let para3body='';
+  if(isDwi){
+    para3body=`I am pleading guilty to ${pleaLbls2Html||ph('[COUNT]')} because of the following: ${S.facts||ph('[Enter facts in form]')}`;
+  }else{
+    const od=S.offDate?fmtShort(S.offDate):'[DATE]';
+    const cnty=S.offCounty||'[COUNTY]';
+    const locPart=S.offCity
+      ?`within the city of <strong>${S.offCity}</strong>, <strong>${cnty}</strong> County`
+      :`within <strong>${cnty}</strong> County`;
+    para3body=`I am pleading guilty to ${pleaLbls2Html||ph('[COUNT]')} because on or about <strong>${od}</strong>, ${locPart}, State of <strong>Minnesota</strong>, I did the following:<div class="p-count" style="white-space:pre-wrap">${S.facts||ph('[Enter facts in form]')}</div>`;
+  }
+
+  /* ── attorney details ── */
+  const _a=getAtty();
+  const attyDisplayName=attyName();
+  const attyLine1=_a.bar?`<strong>${attyDisplayName}</strong> (${_a.bar})`:`<strong>${attyDisplayName}</strong>`;
+  const attyEmail=_a.email?`<br>${_a.email}`:'';
+
+  /* ── paragraph 11 (DWI only) ── */
+  /* ── paragraph 11: Enhanceability —
+     DWI: standard DWI language; Standard: attorney-typed language ── */
+  const enhCustom=(S.enhanceText||'').trim();
+  const p11Std=(!isDwi&&S.enhanceOn)?`<div class="p-para"><span class="p-pn">11.</span><span class="p-pb">${enhCustom?esc(enhCustom).replace(/\n/g,'<br>'):ph('[Type the enhanceability language in the form]')}</span></div>`:'';
+  const p11=(isDwi&&S.enhanceOn)?`<div class="p-para"><span class="p-pn">11.</span><span class="p-pb">Further, I also understand <u><strong>THE ENHANCEABILITY</strong></u> of this crime. I understand that any future Driving While Impaired offenses occurring in the next 10 years will be enhanced by this charge I am pleading guilty to today. In other words, any future offenses will carry more severe criminal and civil penalties; that two DWI's within ten years is a gross misdemeanor and carries mandatory minimum jail sentencing; that three DWI's within ten years is also a gross misdemeanor carrying even higher mandatory minimums; that four DWI's within ten years can result in a felony, and punishment may include imprisonment. I also understand that future offenses will include longer license revocation periods, license impoundment and possibly vehicle forfeiture and/or an alcohol restriction on my license.</span></div>`:'';
+
+  /* ── Immigration consequences paragraph — ALWAYS appears in DWI and
+     Standard petitions, numbered after enhanceability when that is on ── */
+  const immigNum=S.enhanceOn?12:11;
+  const pImmig=`<div class="p-para"><span class="p-pn">${immigNum}.</span><span class="p-pb">I understand if I am not a United States Citizen, this plea of guilty may have consequences on my current status in this country, possibly including denial of naturalization of citizenship, denial of a green card, denial of citizenship, and/or deportation. I understand I have the right to consult with an attorney regarding this if I so wish.</span></div>`;
+  const waiverNum=immigNum+1;
+  const pWaiver=`<div class="p-para"><span class="p-pn">${waiverNum}.</span><span class="p-pb">I am not entering this plea in person. This plea is being entered through my attorney. I understand that I am giving up my right to be present at sentencing and to exercise my right to speak on my own behalf at sentencing. If I am not present when this plea is accepted by the court, I understand that I am voluntarily waiving (giving up) my right to be present and consent to sentencing in my absence.</span></div>`;
+
+  /* ── defendant signature block: sig line + date sig line side-by-side,
+     plus optional client street / city-state-zip / phone / email below ── */
+  const clientInfoLines=[];
+  if(S.clientStreet)clientInfoLines.push(esc(S.clientStreet));
+  if(S.clientCityStateZip)clientInfoLines.push(esc(S.clientCityStateZip));
+  if(S.clientPhone)clientInfoLines.push(esc(S.clientPhone));
+  if(S.clientEmail)clientInfoLines.push(esc(S.clientEmail));
+  const clientInfoHtml=clientInfoLines.length?'<br>'+clientInfoLines.join('<br>'):'';
+
+  const defSig=`<div style="display:flex;gap:0.5in;margin-top:0.5em">
+<div style="flex:1">
+  <div class="p-sig-space"></div>
+  <div class="p-sig-line"></div>
+  <div class="p-sig-label"><strong>${nm}</strong><br>Defendant${clientInfoHtml}</div>
+</div>
+<div style="flex:1">
+  <div class="p-sig-space"></div>
+  <div class="p-sig-line"></div>
+  <div class="p-sig-label">Date</div>
+</div>
+</div>`;
+
+  /* ── prosecutor label: "Prosecutor" for DWI, "Prosecuting Attorney" for Standard ── */
+  const prosLabel=isDwi?'Prosecutor':'Prosecuting Attorney';
+
+  /* ── attorney sig row: sig line + name/address on left, date on right ── */
+  const attyRow=`<div style="display:flex;gap:0.5in;margin-top:0.5em">
+<div style="flex:1">
+  <div class="p-sig-space"></div>
+  <div class="p-sig-line"></div>
+  <div class="p-atty-info">${attySigBlock()}</div>
+</div>
+<div style="flex:1">
+  <div class="p-sig-space"></div>
+  <div class="p-sig-line"></div>
+  <div class="p-sig-label">Date</div>
+</div>
+</div>`;
+
+  /* ── prosecutor and judge: sig line + date side-by-side ── */
+  const sigRow=(label)=>`<div style="display:flex;gap:0.5in;margin-top:0.5em">
+<div style="flex:1">
+  <div class="p-sig-space"></div>
+  <div class="p-sig-line"></div>
+  <div class="p-sig-label">${label}</div>
+</div>
+<div style="flex:1">
+  <div class="p-sig-space"></div>
+  <div class="p-sig-line"></div>
+  <div class="p-sig-label">Date</div>
+</div>
+</div>`;
+
+  return `
+<div class="p-hdr-row"><span>STATE OF MINNESOTA</span><span>DISTRICT COURT</span></div>
+<div class="p-hdr-row"><span>COUNTY OF ${co}</span><span>${dn}</span></div>
+<hr class="p-rule">
+
+<table class="p-cap">
+  <tr>
+    <td style="width:50%">State of Minnesota,</td>
+    <td style="width:50%;white-space:nowrap">Case No. ${cn}</td>
+  </tr>
+  <tr><td class="p-cap-gap">&nbsp;</td><td></td></tr>
+  <tr>
+    <td class="p-cap-indent">Plaintiff,</td>
+    <td></td>
+  </tr>
+  <tr><td class="p-cap-gap">&nbsp;</td><td></td></tr>
+  <tr>
+    <td>vs.</td>
+    <td style="font-weight:700">PETITION TO ENTER<br>PLEA OF GUILTY</td>
+  </tr>
+  <tr><td class="p-cap-gap">&nbsp;</td><td></td></tr>
+  <tr>
+    <td>${nm},</td>
+    <td></td>
+  </tr>
+  <tr><td class="p-cap-gap">&nbsp;</td><td></td></tr>
+  <tr>
+    <td class="p-cap-indent">Defendant.</td>
+    <td></td>
+  </tr>
+</table>
+<hr class="p-rule">
+
+<div class="p-para"><span class="p-pn">1.</span><span class="p-pb">I, ${nm}, <strong>DOB ${dob}</strong>, have reviewed the charges against me, and I understand them:${cHtml}</span></div>
+
+<div class="p-para"><span class="p-pn">2.</span><span class="p-pb">I am pleading guilty to:${pHtml}</span></div>
+
+<div class="p-para"><span class="p-pn">3.</span><span class="p-pb">${para3body}</span></div>
+
+<div class="p-para"><span class="p-pn">4.</span><span class="p-pb">I make no claim that I am innocent of the charge to which I am entering a plea of guilty.</span></div>
+
+<div class="p-para"><span class="p-pn">5.</span><span class="p-pb">I understand that I was charged with a <strong>${S.level}</strong>, which carries a maximum sentence of a <strong>${S.maxFine}</strong> fine and/or <strong>${inc}.</strong></span></div>
+
+<div class="p-para"><span class="p-pn">6.</span><span class="p-pb">I have fully discussed the charges, my constitutional rights, this petition, and any of the possible consequences that could happen if I were not a US citizen, with my attorney, <strong>${attyDisplayName}</strong>.</span></div>
+
+<div class="p-para"><span class="p-pn">7.</span><span class="p-pb">I understand that (under the original <strong>${S.level}</strong> charge level) I have the following constitutional rights; which I knowingly, voluntarily and intelligently waive (give up) by entering this plea of guilty:<div class="p-count">${RIGHTS.map((r,i)=>`<div${i===0?'':' style="margin-top:0.2em"'}>${String.fromCharCode(97+i)}. ${r}</div>`).join('')}</div></span></div>
+
+<div class="p-para"><span class="p-pn">8.</span><span class="p-pb">Understanding the above, I am entering my plea of guilty freely and voluntarily and without any promises except as noted in number 9 below.</span></div>
+
+<div class="p-para"><span class="p-pn">9.</span><span class="p-pb">I am entering my plea of guilty based on the following sentencing agreement:<div class="p-count" style="font-style:italic;font-weight:700;text-decoration:underline">${S.sentencing||`<span style="color:#9CA3AF;text-decoration:none;font-weight:400;font-style:normal">${ph('[Enter sentencing agreement in form]')}</span>`}</div></span></div>
+
+<div class="p-para"><span class="p-pn">10.</span><span class="p-pb">I understand that if the court does not accept the agreement stated in number 9, I have the right to withdraw my plea of guilty and have a trial.</span></div>
+
+${p11}${p11Std}${pImmig}${pWaiver}
+
+${defSig}
+
+<div class="p-atty-stmt"><strong>${attyDisplayName}</strong> states that they are the attorney for the defendant in the above criminal case; and that they have: 1) personally explained the contents of this petition to the defendant, 2) that to the best of their knowledge the defendant's constitutional rights have not been violated and no meritorious defense exists to the charges to which defendant is pleading guilty</div>
+
+${attyRow}
+
+${sigRow(prosLabel)}
+
+${sigRow('Judge of District Court')}`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TEXT (copy / drive)
+═══════════════════════════════════════════════════════ */
+function buildTxt(){
+  if(S.type==='pm'){
+    const pd=fmtPm(S.pmDate);
+    const co=(S.county||'[COUNTY]').toUpperCase();
+    const dist=CD[S.county]||'';
+    const dn=DN[dist]||'[DISTRICT]';
+    return[
+      `STATE OF MINNESOTA\t\t\t\t\tDISTRICT COURT`,
+      `COUNTY OF ${co}\t\t\t\t\t${dn} JUDICIAL DISTRICT`,``,
+      `STATE OF MINNESOTA,`,`\t\t\tPlaintiff,\t\t\tPETITION TO ENTER PLEA OF GUILTY`,`\t\t-vs-\t\t\t\t\tTO PETTY MISDEMEANOR`,``,
+      `${S.clientName||'[CLIENT]'},`,`\t\t\tDefendant.\t\t\tDistrict Court File No. ${S.caseNumber}`,``,
+      `The State of Minnesota agrees to a stay of adjudication on the petty misdemeanor charge in the above-entitled matter, subject to the Court's approval. The following conditions shall apply:`,``,
+      `\t1. TERMS`,``,`\t${S.terms||'[TERMS]'}`,``,
+      `________________________________\t\t________________________________`,`Prosecutor\t\t\t\t\tDefendant`,``,
+      `\t\t\t\t\t\t________________________________`,`\t\t\t\t\t\t${attyName()}, Attorney for Defendant`,``,
+      `Dated this ${pd.day} day of ${pd.month}, 202${pd.yr}\t\t________________________________`,`\t\t\t\t\t\tJudge of District Court`
+    ].join('\n');
+  }
+
+  const isDwi=S.type==='dwi';
+  const eff=getEffChgs();
+  const pleaCs=eff.filter(c=>S.pleaSel.includes(c.id)||S.pleaSel.includes(String(c.id)));
+  const co=(S.county||'[COUNTY]').toUpperCase();
+  const d=CD[S.county]||'';const dn=DN[d]?`${DN[d]} JUDICIAL DISTRICT`:'[DISTRICT] JUDICIAL DISTRICT';
+  const inc=`${S.maxJail} ${S.jailUnit}`;
+  const cList=eff.map((c,n)=>`\t${buildCnt(c,n+1,isDwi,n===eff.length-1)}`).join('\n');
+
+  // Plea list with AMENDED COUNT support
+  const amendedIdx=S.amendedCountId!==null?eff.findIndex(c=>String(c.id)===String(S.amendedCountId)):-1;
+  const pleaSet=new Set([...pleaCs.map(c=>String(c.id))]);
+  if(amendedIdx>=0)pleaSet.add(String(eff[amendedIdx].id));
+  const pleaTxtLines=[];const pleaLblList=[];
+  eff.forEach((c,n)=>{
+    if(!pleaSet.has(String(c.id)))return;
+    const isAmend=amendedIdx>=0&&String(c.id)===String(eff[amendedIdx].id);
+    if(isAmend){
+      pleaTxtLines.push({raw:`AMENDED COUNT ${n+1}: Careless Driving, a violation of Minnesota Statute 169.13 subd. 2(a)`,lbl:`AMENDED COUNT ${n+1}`});
+    }else{
+      pleaTxtLines.push({raw:buildCnt(c,n+1,isDwi,false),lbl:`Count ${n+1}`}); // isLast fixed below
+    }
+  });
+  const pList=pleaTxtLines.map((item,i)=>{
+    const isLast=i===pleaTxtLines.length-1;
+    const txt=isLast?item.raw.replace(/;$/,'.')+(item.raw.endsWith(';')?'':'.'):item.raw;
+    return`\t${txt}`;
+  }).join('\n');
+  const pleaLbls=pleaTxtLines.map(x=>x.lbl).join(' and ');
+
+  const L=[
+    `STATE OF MINNESOTA\t\t\t\tDISTRICT COURT`,`COUNTY OF ${co}\t\t\t\t${dn}`,``,
+    `State of Minnesota,\t\t\t\tCase No. ${S.caseNumber}`,`\tPlaintiff,`,``,
+    `vs.\t\t\t\t\t\tPETITION TO ENTER PLEA OF GUILTY`,``,
+    `${S.clientName||'[CLIENT NAME]'}`,`\tDefendant.`,``,
+    `1.\tI, ${S.clientName||'[NAME]'}, DOB ${fmtDob(S.clientDob)||'[DOB]'}, have reviewed the charges against me, and I understand them:`,``,cList,``,
+    `2.\tI am pleading guilty to:`,``,pList,``
+  ];
+  if(isDwi){L.push(`3.\tI am pleading guilty to ${pleaLbls||'[COUNT]'} because of the following: ${S.facts||'[FACTS]'}`)}
+  else{const od=S.offDate?fmtShort(S.offDate):'[DATE]';L.push(`3.\tI am pleading guilty to ${pleaLbls||'[COUNT]'} because on or about ${od}, within the city of ${S.offCity||'[CITY]'}, ${S.offCounty||'[COUNTY]'} County, State of Minnesota, I did the following:`,``,`\t${S.facts||'[FACTS]'}`)}
+  L.push(``,`4.\tI make no claim that I am innocent of the charge to which I am entering a plea of guilty.`,``);
+  L.push(`5.\tI understand that I was charged with a ${S.level}, which carries a maximum sentence of a ${S.maxFine} fine and/or ${inc}.`,``);
+  L.push(`6.\tI have fully discussed the charges, my constitutional rights, this petition, and any of the possible consequences that could happen if I were not a US citizen, with my attorney, ${attyName()}.`,``);
+  L.push(`7.\tI understand that (under the original ${S.level} charge level) I have the following constitutional rights; which I knowingly, voluntarily and intelligently waive (give up) by entering this plea of guilty:`);
+  L.push(`\ta. the right to a trial to the court (judge only) or to a jury, in which I am presumed innocent until proven guilty beyond a reasonable doubt;`,`\tb. the right to confront and cross-examine all witnesses against me;`,`\tc. the right to remain silent or to testify for myself;`,`\td. the right to subpoena witnesses to appear on my behalf;`,`\te. the right to a pretrial hearing to contest the admissibility of evidence obtained from a search or seizure and/or information I offered to the police in the form of a written or oral statement.`);
+  L.push(``,`8.\tUnderstanding the above, I am entering my plea of guilty freely and voluntarily and without any promises except as noted in number 9 below.`,``);
+  L.push(`9.\tI am entering my plea of guilty based on the following sentencing agreement:`,``,`\t${S.sentencing||'[SENTENCING AGREEMENT]'}`,``);
+  L.push(`10.\tI understand that if the court does not accept the agreement stated in number 9, I have the right to withdraw my plea of guilty and have a trial.`);
+  if(S.enhanceOn&&S.type!=='dwi')L.push(``,`11.\t${(S.enhanceText||'[Enhanceability language]').trim()}`);
+  const _immigN=S.enhanceOn?12:11;
+  const _immigTxt=`${_immigN}.\tI understand if I am not a United States Citizen, this plea of guilty may have consequences on my current status in this country, possibly including denial of naturalization of citizenship, denial of a green card, denial of citizenship, and/or deportation. I understand I have the right to consult with an attorney regarding this if I so wish.`;
+  if(S.enhanceOn&&S.type==='dwi')L.push(``,`11.\tFurther, I also understand THE ENHANCEABILITY of this crime. I understand that any future Driving While Impaired offenses occurring in the next 10 years will be enhanced by this charge I am pleading guilty to today. In other words, any future offenses will carry more severe criminal and civil penalties; that two DWI's within ten years is a gross misdemeanor and carries mandatory minimum jail sentencing; that three DWI's within ten years is also a gross misdemeanor carrying even higher mandatory minimums; that four DWI's within ten years can result in a felony, and punishment may include imprisonment. I also understand that future offenses will include longer license revocation periods, license impoundment and possibly vehicle forfeiture and/or an alcohol restriction on my license.`);
+  L.push(``,_immigTxt);
+  const _waiverN=_immigN+1;
+  L.push(``,`${_waiverN}.\tI am not entering this plea in person. This plea is being entered through my attorney. I understand that I am giving up my right to be present at sentencing and to exercise my right to speak on my own behalf at sentencing. If I am not present when this plea is accepted by the court, I understand that I am voluntarily waiving (giving up) my right to be present and consent to sentencing in my absence.`);
+  if(isDwi)L.push(``,`____________________________`,`Defendant`,``,`____________________________`,`Date`);
+  else L.push(``,`____________________________\t\t\t\t____________________________`,`Defendant\t\t\t\t\t\tDate`);
+  L.push(``,`${attyName()} states that they are the attorney for the defendant in the above criminal case; and that they have: 1) personally explained the contents of this petition to the defendant, 2) that to the best of their knowledge the defendant's constitutional rights have not been violated and no meritorious defense exists to the charges to which defendant is pleading guilty`,``);
+  L.push(`________________________________`,attySigTxt());
+  L.push(``,`________________________________\t\t\t\t____________________________`,`Prosecuting Attorney\t\t\t\t\tDate`);
+  L.push(``,`________________________________\t\t\t\t____________________________`,`Judge of District Court\t\t\t\t\tDate`);
+  return L.join('\n');
+}
+
+/* ═══════════════════════════════════════════════════════
+   DRIVE + COPY
+═══════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   EXPORT — WORD / GOOGLE DOCS / PDF
+═══════════════════════════════════════════════════════ */
+function exportFileBase(){
+  const nm=(S.clientName||'Client').replace(/[\\/:*?"<>|]/g,'').trim();
+  const typ=S.type==='pm'?'Petty Plea Petition':S.type==='standard'?'Plea Petition':'DWI Plea Petition';
+  return `${typ} - ${nm}`;
+}
+
+/* Gather the petition pages as one Word-ready HTML document.
+   Word understands HTML with mso page-break markers, so the
+   pagination from the preview carries straight into the document. */
+function petitionWordHTML(){
+  const pages=[...document.querySelectorAll('#petition-doc .page')];
+  if(!pages.length)return null;
+  const body=pages.map(p=>p.innerHTML)
+    .join(`<br clear="all" style="mso-special-character:line-break;page-break-before:always">`);
+  return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><title>${esc(exportFileBase())}</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+<style>
+@page{size:8.5in 11.0in;margin:1.0in}
+body{font-family:"Times New Roman",serif;font-size:12pt;line-height:1.15;color:#000}
+table{border-collapse:collapse;width:100%}
+td{vertical-align:top;padding:0}
+.p-hdr-row{font-weight:bold}
+.p-hdr-row span{display:inline-block}
+.p-rule{border:none;border-top:1.5px solid #000;margin:8px 0}
+.p-cap-gap{height:11pt}
+.p-cap td.p-cap-indent,.p-cap-indent{padding-left:1.25in}
+.p-para{margin-bottom:11pt}
+.p-pn{display:inline-block;width:0.5in;vertical-align:top}
+.p-pb{display:inline-block;width:5.9in;vertical-align:top}
+.p-count{margin-left:0.5in;margin-top:10pt}
+.p-count-i{margin-left:0.5in;margin-top:10pt;font-style:italic}
+.p-count-i strong{font-style:normal}
+.p-sig-space{height:14pt}
+.p-sig-line{border-bottom:1px solid #000;width:2.5in;font-size:1pt}
+.p-sig-label{margin-top:1pt}
+.p-atty-stmt{margin-top:16pt}
+.p-ph{color:#999;font-style:italic}
+</style></head><body>${body}</body></html>`;
+}
+
+/* ── 1. Microsoft Word (.doc — opens natively in Word) ── */
+function convertToWord(){
+  const st=$('drv-status');
+  const html=petitionWordHTML();
+  if(!html){st.innerHTML='<span class="stat-err">Open the preview first.</span>';return}
+  const blob=new Blob(['\ufeff'+html],{type:'application/msword'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=exportFileBase()+'.doc';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+  st.innerHTML='<span style="color:var(--green-tx)">✓ Word file downloaded.</span>';
+}
+
+/* ── 2. Google Docs (copies formatted petition + opens docs.new to paste) ──
+   Note: a web page cannot write INTO a Google Doc without Google sign-in,
+   so the petition is placed on the clipboard with formatting and a fresh
+   doc is opened — one Ctrl+V finishes the job. Copy is done two ways for
+   reliability (modern Clipboard API, then execCommand fallback that also
+   works when running from a file:// URL). */
+function copyRichFallback(html){
+  const d=document.createElement('div');
+  d.contentEditable='true';
+  d.style.cssText='position:fixed;left:-9999px;top:0;background:#fff;color:#000';
+  d.innerHTML=html;
+  document.body.appendChild(d);
+  const r=document.createRange();
+  r.selectNodeContents(d);
+  const sel=window.getSelection();
+  sel.removeAllRanges();sel.addRange(r);
+  let ok=false;
+  try{ok=document.execCommand('copy')}catch(e){}
+  sel.removeAllRanges();d.remove();
+  return ok;
+}
+async function convertToGDocs(){
+  const st=$('drv-status');
+  const pages=[...document.querySelectorAll('#petition-doc .page')];
+  if(!pages.length){st.innerHTML='<span class="stat-err">Open the preview first.</span>';return}
+  const html=`<div style="font-family:'Times New Roman',serif;font-size:12pt;line-height:1.15;color:#000">${pages.map(p=>p.innerHTML).join('<br><br>')}</div>`;
+  const text=buildTxt();
+  let copied=false;
+  // Attempt 1: modern async clipboard with rich HTML
+  try{
+    if(navigator.clipboard&&window.ClipboardItem){
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html':new Blob([html],{type:'text/html'}),
+        'text/plain':new Blob([text],{type:'text/plain'})
+      })]);
+      copied=true;
+    }
+  }catch(e){console.warn('Clipboard API failed, trying fallback:',e)}
+  // Attempt 2: execCommand fallback (works on file:// and older browsers)
+  if(!copied)copied=copyRichFallback(html);
+  if(copied){
+    window.open('https://docs.new','_blank');
+    st.innerHTML='<span style="color:var(--green-tx);font-weight:600">✓ Petition copied with formatting. In the new Google Doc tab, click in the document and press Ctrl+V (Cmd+V on Mac) to paste it in.</span>';
+  }else{
+    st.innerHTML='<span class="stat-err">Copy was blocked by the browser — click "Copy text", open docs.new, and paste manually.</span>';
+  }
+}
+
+/* ── 3. PDF — generates a real .pdf file and saves it to the computer ── */
+let _pdfLibLoading=null;
+function loadHtml2Pdf(){
+  if(window.html2pdf)return Promise.resolve();
+  if(_pdfLibLoading)return _pdfLibLoading;
+  _pdfLibLoading=new Promise((res,rej)=>{
+    const sc=document.createElement('script');
+    sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    sc.onload=res;
+    sc.onerror=()=>rej(new Error('Could not load the PDF library — check your internet connection.'));
+    document.head.appendChild(sc);
+  });
+  return _pdfLibLoading;
+}
+async function convertToPdf(){
+  const st=$('drv-status');
+  const pages=[...document.querySelectorAll('#petition-doc .page')];
+  if(!pages.length){st.innerHTML='<span class="stat-err">Open the preview first.</span>';return}
+  st.innerHTML='<span style="color:var(--muted)">Generating PDF…</span>';
+  try{
+    await loadHtml2Pdf();
+    // Clone the pages into an offscreen wrapper with print-clean styling
+    const wrap=document.createElement('div');
+    wrap.style.cssText='position:absolute;left:-99999px;top:0;background:#fff';
+    pages.forEach(p=>{
+      const c=p.cloneNode(true);
+      c.style.margin='0';c.style.boxShadow='none';c.removeAttribute('contenteditable');
+      c.classList.add('pdf-page');
+      wrap.appendChild(c);
+    });
+    document.body.appendChild(wrap);
+    // Hide the on-screen "Page X of Y" badge in the export
+    const styleFix=document.createElement('style');
+    styleFix.textContent='.pdf-page::before{display:none!important}';
+    document.head.appendChild(styleFix);
+
+    await html2pdf().set({
+      margin:0,
+      filename:exportFileBase()+'.pdf',
+      image:{type:'jpeg',quality:0.97},
+      html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff'},
+      jsPDF:{unit:'in',format:'letter',orientation:'portrait'},
+      pagebreak:{mode:['css','legacy'],after:'.pdf-page'}
+    }).from(wrap).save();
+
+    wrap.remove();styleFix.remove();
+    st.innerHTML='<span style="color:var(--green-tx)">✓ PDF saved to your computer.</span>';
+  }catch(e){
+    console.error(e);
+    st.innerHTML=`<span class="stat-err">PDF generation failed (${esc(e.message||'error')}). Use 🖨 Print → Save as PDF instead.</span>`;
+  }
+}
+
+/* ── 4. Print — browser print; pages map 1:1 to the preview ── */
+function printPetition(){
+  const st=$('drv-status');
+  st.innerHTML='<span style="color:var(--muted)">In the print dialog set Margins to <b>None</b> (or Default if None unavailable) — pages match the preview exactly.</span>';
+  setTimeout(()=>window.print(),150);
+}
+
+async function pushDrive(){
+  const btn=$('btn-drv'),st=$('drv-status');
+  btn.textContent='Creating...';btn.disabled=true;st.innerHTML='';
+  const txt=buildTxt();
+  const typeMap={dwi:'DWI Plea',standard:'Plea',pm:'PM Plea'};
+  const title=`${typeMap[S.type]||'Plea'} - ${S.clientName||'Client'} - ${S.caseNumber||'Case'}`;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',max_tokens:1000,
+        mcp_servers:[{type:'url',url:'https://drivemcp.googleapis.com/mcp/v1',name:'google-drive'}],
+        messages:[{role:'user',content:`Create a new Google Doc titled "${title}" with this exact text:\n\n${txt}\n\nReturn only the document URL.`}]
+      })
+    });
+    const data=await r.json();
+    const text=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join(' ');
+    const m=text.match(/https:\/\/docs\.google\.com\/[^\s"'>)]+/);
+    st.innerHTML=m
+      ?`<span class="stat-ok">Saved! </span><a class="drv-link" href="${m[0]}" target="_blank">Open in Drive →</a>`
+      :`<span class="stat-ok">Created in Drive</span>`;
+  }catch(e){st.innerHTML='<span class="stat-err">Error — try copying instead</span>'}
+  btn.textContent='Push to Google Drive';btn.disabled=false;
+}
+
+function copyTxt(){
+  const btn=$('btn-cpy');
+  navigator.clipboard.writeText(buildTxt()).then(()=>{
+    btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy to clipboard',2000);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   AI AUTO-FILL FROM PDF COMPLAINT / CITATION
+═══════════════════════════════════════════════════════ */
+function saveApiKey(v){
+  try{localStorage.setItem('gm_anthropic_key',v.trim())}catch(e){}
+}
+function getApiKey(){
+  if(EMBEDDED_API_KEY)return EMBEDDED_API_KEY;
+  try{return localStorage.getItem('gm_anthropic_key')||''}catch(e){return ''}
+}
+function aiEndpoint(){
+  if(PROXY_URL)return PROXY_URL;
+  return 'https://api.anthropic.com/v1/messages';
+}
+function aiHeaders(){
+  if(PROXY_URL)return {'Content-Type':'application/json'};
+  return _directHeaders();
+}
+function _directHeaders(){
+  const h={'Content-Type':'application/json'};
+  const k=getApiKey();
+  if(k){
+    h['x-api-key']=k;
+    h['anthropic-version']='2023-06-01';
+    h['anthropic-dangerous-direct-browser-access']='true';
+  }
+  return h;
+}
+
+/* Cached PDF base64 — read once on selection, reused for full auto-fill */
+let _pdfB64=null;
+
+async function onPdfSelected(){
+  const fileInput=$('pdf-up'),st=$('ai-status');
+  const file=fileInput.files&&fileInput.files[0];
+  _pdfB64=null;
+  if(!file)return;
+  if(file.size>30*1024*1024){st.innerHTML='<span style="color:#b91c1c">PDF is over 30MB — too large to process.</span>';return}
+  st.textContent='Reading PDF and counting the counts...';
+  try{
+    _pdfB64=await new Promise((res,rej)=>{
+      const r=new FileReader();
+      r.onload=()=>res(r.result.split(',')[1]);
+      r.onerror=()=>rej(new Error('read failed'));
+      r.readAsDataURL(file);
+    });
+    const resp=await fetch(aiEndpoint(),{
+      method:'POST',
+      headers:aiHeaders(),
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',max_tokens:50,
+        messages:[{role:'user',content:[
+          {type:'document',source:{type:'base64',media_type:'application/pdf',data:_pdfB64}},
+          {type:'text',text:'How many criminal counts/charges are listed in this complaint or citation? Respond with ONLY raw JSON, no fences: {"countTotal": N}'}
+        ]}]
+      })
+    });
+    const raw=await resp.text();
+    let data;
+    try{data=JSON.parse(raw)}catch(_){throw new Error(`HTTP ${resp.status}: ${raw.slice(0,200)}`)}
+    if(data.error)throw new Error((data.error.message||data.error.type)+(data.error.type?` [${data.error.type}]`:''));
+    const txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const m=txt.match(/\{[^}]*\}/);
+    const n=m?(JSON.parse(m[0]).countTotal|0):0;
+    if(n>=1&&n<=10){
+      setCountNum(n); // updates count cards + plea dropdown
+      st.innerHTML=`<span style="color:#15803d">✓ ${n} count${n>1?'s':''} detected.</span> Choose what you're pleading to, add the deal, then click ✨ Auto-fill petition.`;
+    }else{
+      st.textContent='Could not count the counts — set the number manually, then click ✨ Auto-fill petition.';
+    }
+  }catch(e){
+    console.error('Count detection failed:',e);
+    if((e.message||'').includes('Failed to fetch')&&!getApiKey()&&!PROXY_URL){
+      st.innerHTML='<span style="color:#b91c1c">Connection blocked — add your API key under "⚙ API key settings" below.</span>';
+    }else if((e.message||'').includes('Failed to fetch')){
+      st.innerHTML='<span style="color:#b91c1c">Connection failed — the AI proxy could not be reached. Check the Worker URL.</span>';
+    }else{
+      st.innerHTML=`<span style="color:#b45309">Pre-count failed: ${esc(e.message||'unknown error')}</span>`;
+    }
+  }
+}
+
+async function autoFillFromPdf(){
+  const fileInput=$('pdf-up'),st=$('ai-status'),btn=$('btn-ai');
+  const file=fileInput.files&&fileInput.files[0];
+  if(!file){st.innerHTML='<span style="color:#b45309">Choose a PDF first.</span>';return}
+  if(file.size>30*1024*1024){st.innerHTML='<span style="color:#b91c1c">PDF is over 30MB — too large to process.</span>';return}
+  btn.disabled=true;btn.textContent='Reading PDF...';
+  st.textContent='Extracting information with AI — this takes a few seconds...';
+  try{
+    const b64=_pdfB64||await new Promise((res,rej)=>{
+      const r=new FileReader();
+      r.onload=()=>res(r.result.split(',')[1]);
+      r.onerror=()=>rej(new Error('read failed'));
+      r.readAsDataURL(file);
+    });
+
+    const pleaSelV=($('ai-plea-sel')?$('ai-plea-sel').value:'');
+    let pleaIn='';
+    if(pleaSelV==='amended'){
+      pleaIn='Amended Count: '+($('ai-amend')?$('ai-amend').value.trim():'');
+    }else if(pleaSelV==='multi'){
+      const parts=[];
+      document.querySelectorAll('.ai-multi-cb:checked').forEach(cb=>{
+        if(cb.value==='amended')parts.push('Amended Count: '+($('ai-amend')?$('ai-amend').value.trim():''));
+        else parts.push('Count '+cb.value.slice(1));
+      });
+      pleaIn=parts.join(' and ');
+    }else if(pleaSelV.startsWith('c')){
+      pleaIn='Count '+pleaSelV.slice(1);
+    }
+    const dealIn=($('ai-deal')?$('ai-deal').value.trim():'');
+
+    const prompt=`You are extracting data from a Minnesota criminal complaint or citation PDF to fill a guilty plea petition form. Respond with ONLY a raw JSON object — no markdown code fences, no explanation, no preamble. Use empty string "" (or null / empty array) for anything not found.
+
+${pleaIn?`THE DEFENDANT IS PLEADING TO: "${pleaIn}". Use this to populate pleaCounts (the count numbers being pled to) and amendedCount if an amended charge is described (e.g. "Amended Count 3 - Careless" means count 3 is amended to Careless Driving).`:''}
+${dealIn?`THE PLEA DEAL (attorney shorthand): "${dealIn}". Expand this into formal sentencing-agreement language in the style used in Minnesota plea petitions. Example style: "Plead Guilty to Amended Count 3. Dismiss remaining. Stay of Imposition for 1 year to Dakota County Community Corrections. Credit for 1 day previously served. Pay a fine of $600 plus fees and surcharge. Complete a Chemical Use Assessment and follow all recommendations. Complete a Victim Impact Panel. No same or similar offenses. Remain law abiding." Expand all abbreviations (SOI = Stay of Imposition, SOA = Stay of Adjudication, CUA = Chemical Use Assessment, VIP = Victim Impact Panel, comm corr = Community Corrections, ct = Count). Put it in the sentencingAgreement field.`:''}
+
+For the "facts" field: write a first-person factual basis, as if the defendant is admitting to the conduct. Tailor it to the count being PLED TO (if a plea count was specified above, use that count's statute; otherwise use the primary DWI count). ALWAYS open with the date, city, and county of the offense when available, in this exact pattern: "On or about [Month Day, Year], in the city of [City], [County] County, Minnesota: " (use "in the township of" if the complaint says township; omit any piece genuinely not in the complaint). Then continue with how and why law enforcement stopped, approached, or contacted the defendant, using the actual circumstances in the complaint — e.g. stopped for speeding or a lane violation, contacted after a motor vehicle accident (briefly describe the accident), approached while stuck in a ditch or snowbank, contacted in a parking lot after a citizen report, found parked or asleep in the vehicle, etc. Keep the rest simple — follow these templates closely:
+
+If pleading to a .08 BAC count (169A.20 subd. 1(5)): "I was driving a motor vehicle when I was [stopped/approached/contacted by law enforcement — actual reason and circumstances from the complaint, including accident details if any]. Prior to driving, I had consumed alcohol. While speaking with the officer, he noticed signs that I may be impaired. I was then asked to step out of the vehicle to perform a series of field sobriety tests. I performed poorly on those tests and was subsequently arrested on suspicion of driving while impaired. While at the station, I was read the Minnesota Breath Test Advisory and declined to speak to an attorney. I then submitted a breath sample that showed my blood alcohol concentration to be .08 or more. I submitted the sample within 2 hours of driving."
+
+If pleading to an Under the Influence count (169A.20 subd. 1(1)): same story through the arrest, then end with: "The amount of alcohol I consumed impaired my ability to safely operate a motor vehicle." No testing details.
+
+For any other charge (refusal, controlled substance, careless driving, etc.): use the same simple structure and length — contact reason, basic observations, what happened — adapted to the elements of that charge. Roughly 5-8 short sentences. Only use details actually in the complaint; do not invent specifics.
+
+For charges: list every count in order. For DWI counts, the complaint usually cites both the offense statute (e.g. 169A.20 subd. 1(1)) and a degree/penalty reference statute (169A.24, 169A.25, 169A.26, or 169A.27). Put the offense statute in "statute" and the degree statute in "referenceStatute". If a count IS the degree charge itself (e.g. "4th Degree DWI, 169A.27"), put that in "statute" and leave referenceStatute empty.
+
+Schema:
+{
+ "clientName": "defendant's full legal name in normal Title Case capitalization (e.g. Antonio Luis Estrada — never ALL CAPS)",
+ "dob": "YYYY-MM-DD",
+ "county": "Minnesota county name only, e.g. Hennepin",
+ "caseNumber": "court file number exactly as printed, e.g. 27-CR-25-12345",
+ "clientStreet": "defendant street address line",
+ "clientCityStateZip": "defendant city, state, zip on one line",
+ "clientPhone": "defendant phone number",
+ "clientEmail": "defendant email",
+ "offenseDate": "YYYY-MM-DD",
+ "offenseCity": "city where offense occurred",
+ "chargeLevel": "Misdemeanor or Gross Misdemeanor or Felony — the level of the most serious charge",
+ "facts": "first-person factual basis summary",
+ "charges": [
+   {"description":"charge name as printed","statute":"169A.20 subd. 1(1)","referenceStatute":"169A.27"}
+ ],
+ "pleaCounts": [2],
+ "amendedCount": {"count": 3, "charge": "Careless Driving", "statute": "169.13 subd. 2(a)"},
+ "sentencingAgreement": "formal expanded deal language, or empty string"
+}
+pleaCounts is an array of count numbers (integers) being pled to; empty array if not specified. amendedCount is null unless a count is being amended.`;
+
+    const resp=await fetch(aiEndpoint(),{
+      method:'POST',
+      headers:aiHeaders(),
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',max_tokens:4000,
+        messages:[{role:'user',content:[
+          {type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}},
+          {type:'text',text:prompt}
+        ]}]
+      })
+    });
+    const data=await resp.json();
+
+    // Surface API-level errors clearly
+    if(data.error){
+      console.error('API error:',data.error);
+      st.innerHTML=`<span style="color:#b91c1c">AI error: ${esc(data.error.message||data.error.type||'unknown')}</span>`;
+      btn.disabled=false;btn.textContent='✨ Auto-fill petition';
+      return;
+    }
+
+    const txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+    if(!txt){
+      console.error('Empty AI response:',data);
+      st.innerHTML='<span style="color:#b91c1c">AI returned an empty response — try again.</span>';
+      btn.disabled=false;btn.textContent='✨ Auto-fill petition';
+      return;
+    }
+
+    // Robust JSON extraction: strip fences, then take outermost {...}
+    let clean=txt.replace(/```json|```/g,'').trim();
+    const a=clean.indexOf('{'),z=clean.lastIndexOf('}');
+    if(a>=0&&z>a)clean=clean.slice(a,z+1);
+    const j=JSON.parse(clean);
+
+    applyExtracted(j);
+    st.innerHTML='<span style="color:#15803d">✓ Auto-filled. Review each field and fill in anything left blank.</span>';
+  }catch(e){
+    console.error('Auto-fill failed:',e);
+    if((e.message||'').includes('Failed to fetch')&&!getApiKey()&&!PROXY_URL){
+      st.innerHTML='<span style="color:#b91c1c">Connection blocked — when running this file outside claude.ai you need an API key. Click "⚙ API key settings" below, paste your key from console.anthropic.com, and try again.</span>';
+    }else{
+      st.innerHTML=`<span style="color:#b91c1c">Could not extract from this PDF (${esc(e.message||'error')}). Check the browser console for details, or fill the form manually.</span>`;
+    }
+  }
+  btn.disabled=false;btn.textContent='✨ Auto-fill petition';
+}
+
+function applyExtracted(j){
+  const setIf=(id,key,val)=>{
+    if(!val)return;
+    S[key]=val;
+    const e=$(id);if(e)e.value=val;
+  };
+
+  // Names from complaints often arrive ALL CAPS — convert to proper Title Case
+  const titleCase=s=>s.replace(/\S+/g,w=>{
+    // Keep short particles + suffixes sensible: JR/SR/II/III/IV stay caps-ish
+    if(/^(II|III|IV|JR\.?|SR\.?)$/i.test(w))return w.length<=2?w.toUpperCase():w.charAt(0).toUpperCase()+w.slice(1).toLowerCase().replace(/^(jr|sr)/,m=>m.charAt(0).toUpperCase()+m.slice(1));
+    return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();
+  });
+  const nmFixed=j.clientName&&j.clientName===j.clientName.toUpperCase()
+    ?titleCase(j.clientName):j.clientName;
+  setIf('s-name','clientName',nmFixed);
+  setIf('s-dob','clientDob',j.dob);
+
+  // County — match against dropdown options (case-insensitive)
+  if(j.county){
+    const sel=$('s-county');
+    const want=j.county.trim().toLowerCase();
+    for(const o of sel.options){
+      if(o.value.toLowerCase()===want){sel.value=o.value;onCounty();break}
+    }
+  }
+
+  // Case number — detect 4-digit first section, set checkbox accordingly
+  if(j.caseNumber){
+    const firstSec=(j.caseNumber.split('-')[0]||'').replace(/\D/g,'');
+    S.caseNo4=firstSec.length>=4;
+    const cb=$('s-cn4');if(cb)cb.checked=S.caseNo4;
+    const formatted=fmtCaseNo(j.caseNumber);
+    S.caseNumber=formatted;
+    const e=$('s-caseno');if(e)e.value=formatted;
+  }
+
+  // Client contact — reveal the additional info section if any present
+  if(j.clientStreet||j.clientCityStateZip||j.clientPhone||j.clientEmail){
+    S.showAddlClient=true;
+    const cb=$('s-addl');if(cb)cb.checked=true;
+    const w=$('addl-client-wrap');if(w)w.style.display='block';
+    setIf('s-cstreet','clientStreet',j.clientStreet);
+    setIf('s-ccsz','clientCityStateZip',j.clientCityStateZip);
+    if(j.clientPhone){
+      const p=fmtPhone(j.clientPhone);
+      S.clientPhone=p;const e=$('s-cphone');if(e)e.value=p;
+    }
+    setIf('s-cemail','clientEmail',j.clientEmail);
+  }
+
+  // Offense info + facts (rendered inside type-specific fields)
+  if(j.offenseDate)S.offDate=j.offenseDate;
+  if(j.offenseCity)S.offCity=j.offenseCity;
+  if(j.facts)S.facts=j.facts;
+
+  // Charges — map statutes to known charge types + reference degrees
+  if(Array.isArray(j.charges)&&j.charges.length){
+    S.charges=[];S.pleaSel=[];S.amendedCountId=null;
+    const refToDeg=s=>{
+      if(!s)return null;
+      if(/169A\.24/.test(s))return '1st';
+      if(/169A\.25/.test(s))return '2nd';
+      if(/169A\.26/.test(s))return '3rd';
+      if(/169A\.27/.test(s))return '4th';
+      return null;
+    };
+    const norm=s=>(s||'').toLowerCase().replace(/subdivision/g,'subd.').replace(/\s+/g,'');
+    j.charges.forEach(ch=>{
+      const stat=(ch.statute||'').trim();
+      let matched=null;
+      for(const k in CT){
+        if(k==='ref'||k==='other')continue;
+        if(stat&&CT[k].statute&&norm(CT[k].statute)===norm(stat)){matched=k;break}
+      }
+      // Count IS a degree charge itself → 'ref' type
+      let rsc=null;
+      if(!matched&&/169A\.2[4567]/.test(stat)){
+        rsc=/169A\.24/.test(stat)?'1st':/169A\.25/.test(stat)?'2nd':/169A\.26/.test(stat)?'3rd':'4th';
+      }
+      const c={id:S._nid++,desc:'',statute:'',ref:'',ct:null,rd:null,rscDeg:'4th'};
+      if(matched){
+        c.ct=matched;c.desc=CT[matched].desc;c.statute=CT[matched].statute;
+        const deg=refToDeg(ch.referenceStatute||'');
+        if(deg){c.rd=deg;c.ref=RD[deg]}
+      }else if(rsc){
+        c.ct='ref';c.rscDeg=rsc;c.desc=RSC[rsc].desc;c.statute=RSC[rsc].statute;
+      }else{
+        c.ct='other';c.desc=ch.description||'';c.statute=stat;
+        const deg=refToDeg(ch.referenceStatute||'');
+        if(deg){c.rd=deg;c.ref=RD[deg]}
+      }
+      S.charges.push(c);
+    });
+  }
+
+  // Charge level → auto-set penalties
+  if(j.chargeLevel&&PENALTIES[j.chargeLevel]){
+    S.level=j.chargeLevel;
+    const p=PENALTIES[j.chargeLevel];
+    if(p.jail)S.maxJail=p.jail;
+    if(p.fine)S.maxFine=p.fine;
+    S.jailUnit=p.unit;
+  }
+
+  // Plea counts → select matching plea checkboxes (by count position)
+  if(Array.isArray(j.pleaCounts)&&j.pleaCounts.length){
+    S.pleaSel=[];
+    j.pleaCounts.forEach(n=>{
+      const c=S.charges[n-1];
+      if(c)S.pleaSel.push(c.id);
+    });
+  }
+
+  // Amended count → trigger the amendment workflow
+  if(j.amendedCount&&j.amendedCount.count){
+    const c=S.charges[j.amendedCount.count-1];
+    if(c){
+      S.amendedCountId=c.id;
+      S.pleaSel=S.pleaSel.filter(id=>id!==c.id);
+    }
+  }
+
+  // Sentencing agreement (formal language expanded from deal shorthand)
+  if(j.sentencingAgreement)S.sentencing=j.sentencingAgreement;
+
+  // Re-render everything so all auto-filled values appear in the form
+  renderChgSec();
+  renderTF();
+}
+
+/* ═══════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  const sel=$('s-county');
+  Object.keys(CD).sort().forEach(c=>{
+    const o=document.createElement('option');o.value=c;o.textContent=c;sel.appendChild(o);
+  });
+  renderTF();
+  const k=getApiKey();
+  if(k){const e=$('ai-key');if(e)e.value=k}
+});
+</script>
+
+
+
+<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span></body></html>
